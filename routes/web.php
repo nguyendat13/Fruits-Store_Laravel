@@ -52,16 +52,16 @@ Route::get('/public/dang-ky', [DangkyController::class, 'index'])->name('fronten
 
 
 Route::prefix('admin')->group(function () {
-    Route::get("/", [DashboardController::class, "index"])->name("backend.dashboard.index");
+    Route::get("/", [DashboardController::class, "index"])->name("dashboard.index");
     //Product
     Route::prefix('product')->group(function () {
-        Route::get('trash', [ProductController::class, 'trash'])->name('backend.product.trash');
-        Route::get('{product}/delete', [ProductController::class, 'delete'])->name('backend.product.delete');
-        Route::get('{product}/restore', [ProductController::class, 'restore'])->name('backend.product.restore');
-        Route::get("{product}/status", [ProductController::class, "status"])->name('backend.product.status');
-        Route::get("{product}/edit", [ProductController::class, "edit"])->name('backend.product.edit'); // Route tĩnh trước
-        Route::get("{product}/show", [ProductController::class, "show"])->name('backend.product.show'); // Route tham số sau
-        Route::get("create", [ProductController::class, "create"])->name('backend.product.create');
+        Route::get('trash', [ProductController::class, 'trash'])->name('product.trash');
+        Route::get('{product}/delete', [ProductController::class, 'delete'])->name('product.delete');
+        Route::get('{product}/restore', [ProductController::class, 'restore'])->name('product.restore');
+        Route::get("{product}/status", [ProductController::class, "status"])->name('product.status');
+        Route::get("{product}/edit", [ProductController::class, "edit"])->name('product.edit'); // Route tĩnh trước
+        Route::get("{product}/show", [ProductController::class, "show"])->name('product.show'); // Route tham số sau
+        Route::get("create", [ProductController::class, "create"])->name('product.create');
     });
     Route::resource('product', ProductController::class);
     ///
@@ -86,62 +86,62 @@ Route::prefix('admin')->group(function () {
     Route::resource('brand', BrandController::class);
     ///
     Route::prefix('post')->group(function () {
-        Route::get('trash', [PostController::class, 'trash'])->name('backend.post.trash');
-        Route::get('{post}/delete', [PostController::class, 'delete'])->name('backend.post.delete');
-        Route::get('{post}/restore', [PostController::class, 'restore'])->name('backend.post.restore');
-        Route::get("{post}/status", [PostController::class, "status"])->name('backend.post.status');
+        Route::get('trash', [PostController::class, 'trash'])->name('post.trash');
+        Route::get('{post}/delete', [PostController::class, 'delete'])->name('post.delete');
+        Route::get('{post}/restore', [PostController::class, 'restore'])->name('post.restore');
+        Route::get("{post}/status", [PostController::class, "status"])->name('post.status');
     });
     Route::resource('post', PostController::class);
     ///
     Route::prefix('topic')->group(function () {
-        Route::get('trash', [TopicController::class, 'trash'])->name('backend.topic.trash');
-        Route::get('{topic}/delete', [TopicController::class, 'delete'])->name('backend.topic.delete');
-        Route::get('{topic}/restore', [TopicController::class, 'restore'])->name('backend.topic.restore');
-        Route::get("{topic}/status", [TopicController::class, "status"])->name('backend.topic.status');
+        Route::get('trash', [TopicController::class, 'trash'])->name('topic.trash');
+        Route::get('{topic}/delete', [TopicController::class, 'delete'])->name('topic.delete');
+        Route::get('{topic}/restore', [TopicController::class, 'restore'])->name('topic.restore');
+        Route::get("{topic}/status", [TopicController::class, "status"])->name('topic.status');
     });
     Route::resource('topic', TopicController::class);
 
     ///
     Route::prefix('banner')->group(function () {
-        Route::get('trash', [BannerController::class, 'trash'])->name('backend.banner.trash');
-        Route::get('{banner}/delete', [BannerController::class, 'delete'])->name('backend.banner.delete');
-        Route::get('{banner}/restore', [BannerController::class, 'restore'])->name('backend.banner.restore');
-        Route::get("{banner}/status", [BannerController::class, "status"])->name('backend.banner.status');
+        Route::get('trash', [BannerController::class, 'trash'])->name('banner.trash');
+        Route::get('{banner}/delete', [BannerController::class, 'delete'])->name('banner.delete');
+        Route::get('{banner}/restore', [BannerController::class, 'restore'])->name('banner.restore');
+        Route::get("{banner}/status", [BannerController::class, "status"])->name('banner.status');
     });
     Route::resource('banner', BannerController::class);
 
     ///
     Route::prefix('menu')->group(function () {
-        Route::get('trash', [MenuController::class, 'trash'])->name('backend.menu.trash');
-        Route::get('{menu}/delete', [MenuController::class, 'delete'])->name('backend.menu.delete');
-        Route::get('{menu}/restore', [MenuController::class, 'restore'])->name('backend.menu.restore');
-        Route::get("{menu}/status", [MenuController::class, "status"])->name('backend.menu.status');
+        Route::get('trash', [MenuController::class, 'trash'])->name('menu.trash');
+        Route::get('{menu}/delete', [MenuController::class, 'delete'])->name('menu.delete');
+        Route::get('{menu}/restore', [MenuController::class, 'restore'])->name('menu.restore');
+        Route::get("{menu}/status", [MenuController::class, "status"])->name('menu.status');
     });
     Route::resource('menu', MenuController::class);
 
     ///
     Route::prefix('order')->group(function () {
-        Route::get('trash', [OrderController::class, 'trash'])->name('backend.order.trash');
-        Route::get('{order}/delete', [OrderController::class, 'delete'])->name('backend.order.delete');
-        Route::get('{order}/restore', [OrderController::class, 'restore'])->name('backend.order.restore');
-        Route::get("{order}/status", [OrderController::class, "status"])->name('backend.order.status');
+        Route::get('trash', [OrderController::class, 'trash'])->name('order.trash');
+        Route::get('{order}/delete', [OrderController::class, 'delete'])->name('order.delete');
+        Route::get('{order}/restore', [OrderController::class, 'restore'])->name('order.restore');
+        Route::get("{order}/status", [OrderController::class, "status"])->name('order.status');
     });
     Route::resource('order', OrderController::class);
 
     ///
     Route::prefix('user')->group(function () {
-        Route::get('trash', [UserController::class, 'trash'])->name('backend.user.trash');
-        Route::get('{user}/delete', [UserController::class, 'delete'])->name('backend.user.delete');
-        Route::get('{user}/restore', [UserController::class, 'restore'])->name('backend.user.restore');
-        Route::get("{user}/status", [UserController::class, "status"])->name('backend.user.status');
+        Route::get('trash', [UserController::class, 'trash'])->name('user.trash');
+        Route::get('{user}/delete', [UserController::class, 'delete'])->name('user.delete');
+        Route::get('{user}/restore', [UserController::class, 'restore'])->name('user.restore');
+        Route::get("{user}/status", [UserController::class, "status"])->name('user.status');
     });
     Route::resource('user', UserController::class);
     ///
     Route::prefix('contact')->group(function () {
-        Route::get('trash', [ContactController::class, 'trash'])->name('backend.contact.trash');
-        Route::get('{contact}/delete', [ContactController::class, 'delete'])->name('backend.contact.delete');
-        Route::get('{contact}/restore', [ContactController::class, 'restore'])->name('backend.contact.restore');
-        Route::get("{contact}/status", [ContactController::class, "status"])->name('backend.contact.status');
+        Route::get('trash', [ContactController::class, 'trash'])->name('contact.trash');
+        Route::get('{contact}/delete', [ContactController::class, 'delete'])->name('contact.delete');
+        Route::get('{contact}/restore', [ContactController::class, 'restore'])->name('contact.restore');
+        Route::get("{contact}/status", [ContactController::class, "status"])->name('contact.status');
     });
     Route::resource('contact', ContactController::class);
 });

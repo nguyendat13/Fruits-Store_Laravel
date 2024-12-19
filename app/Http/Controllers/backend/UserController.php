@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('backend.user.index');
+        $users = User::select("id","name","password","fullname","gender","thumbnail","email" ,"phone","address","role","status")
+            ->orderBy('created_at', 'DESC')->paginate(10);
+        return view('backend.user.index', compact('users'));
     }
 
     /**

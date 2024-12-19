@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -14,7 +15,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('backend.menu.index');
+        $menus = Menu::select("id", "name", "link", "position", "type", "status")
+            ->orderBy('created_at', 'DESC')->paginate(10);
+        return view('backend.menu.index', compact('menus'));
     }
 
     /**

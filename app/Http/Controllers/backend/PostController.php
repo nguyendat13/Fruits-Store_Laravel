@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('backend.post.index');
+        $posts = Post::select("id", "title", "slug", "description", "thumbnail", "type", "status")
+            ->orderBy('created_at', 'DESC')->paginate(10);
+        return view('backend.post.index', compact('posts'));
     }
 
     /**

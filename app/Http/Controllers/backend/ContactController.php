@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -14,7 +15,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('backend.contact.index');
+        $contacts = Contact::select("id", "name", "email", "phone", "title", "status")
+            ->orderBy('created_at', 'DESC')
+            ->paginate(8);
+
+        return view('backend.contact.index', compact('contacts'));
     }
 
     /**

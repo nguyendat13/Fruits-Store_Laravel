@@ -15,9 +15,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $banners = Banner::where('status', '=', 1)
+        $banners = Banner::select("id", "name", "link", "image", "position", "status")
             ->orderBy('created_at', 'DESC')
-            ->select("id", "name", "link", "image", "position", "status")
             ->paginate(8);
         return view('backend.banner.index', compact('banners'));
     }

@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
-use App\Models\Product;  // Đảm bảo đã import model Banner
 
-class ProductController extends Controller
+class OrderDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($orderId)
     {
-        $products = Product::select("id", "name", "category_id", "brand_id", "slug", "thumbnail", "status")
-            ->orderBy('created_at', 'DESC')
-            ->with('category', 'brand')
-            ->paginate(8);
-        return view('backend.product.index', compact('products'));
+        $orders = OrderDetail::where('order_id', $orderId)
+            ->select("id", "order_id", "product_id", "price", "discount", "qty", "amount")
+            ->with('product')->paginate(10);
+        return view('backend.orderdetail.index', compact('orderDetails'));
     }
 
     /**
@@ -29,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('backend.product.create');
+        //
     }
 
     /**
@@ -42,16 +41,6 @@ class ProductController extends Controller
     {
         //
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view('backend.product.edit');
-    }
 
     /**
      * Display the specified resource.
@@ -61,9 +50,19 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return view('backend.product.show');
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
     /**
      * Update the specified resource in storage.
@@ -84,22 +83,6 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
-    }
-    public function trash()
-    {
-        return view('backend.product.trash');
-    }
-    public function status($id)
-    {
-        //
-    }
-    public function delete($id)
-    {
-        //
-    }
-    public function restore($id)
     {
         //
     }

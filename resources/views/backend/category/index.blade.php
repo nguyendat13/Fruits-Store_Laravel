@@ -28,34 +28,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($categories as $category)
+                        @foreach($categories as $item)
                         <tr class="border-b">
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $category->id }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->id }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">
-                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="rounded-md" width="100">
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="rounded-md" width="100">
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $category->name }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $category->slug }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->name }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->slug }}</td>
                             <td class="px-6 py-4 text-center text-sm text-gray-900">
-                                <span class="bg-{{ $category->status ? 'green' : 'gray' }}-100 text-{{ $category->status ? 'green' : 'gray' }}-700 px-2 py-1 rounded">
-                                    {{ $category->status ? 'Hiển thị' : 'Ẩn' }}
+                                <span class="bg-{{ $item->status ? 'green' : 'red' }}-100 text-{{ $item->status ? 'green' : 'gray' }}-700 px-2 py-1 rounded">
+                                    {{ $item->status ? 'Hiển thị' : 'Ẩn' }}
                                 </span>
                             </td>
                             <td class="flex px-7 py-8 text-center">
                                 <!-- Trạng thái -->
-                                <a href="{{ route('category.status', $category->id) }}" class="bg-{{ $category->status ? 'green' : 'gray' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $category->status ? 'green' : 'gray' }}-600 text-xs">
-                                    <i class="fa {{ $category->status ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
+                                <a href="{{ route('category.status', $item->id) }}" class="bg-{{ $item->status ? 'green' : 'red' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $item->status ? 'green' : 'red' }}-600 text-xs">
+                                    <i class="fa {{ $item->status ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
                                 </a>
                                 <!-- Sửa (Edit) -->
-                                <a href="{{ route('category.edit', $category->id) }}" class="bg-green-500 text-white px-4 py-2 m-1 rounded-md hover:bg-green-600 text-xs">
+                                <a href="{{ route('category.edit', $item->id) }}" class="bg-green-500 text-white px-4 py-2 m-1 rounded-md hover:bg-green-600 text-xs">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <!-- Xem (View) -->
-                                <a href="{{ route('category.show', $category->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
+                                <a href="{{ route('category.show', $item->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <!-- Xóa (Delete) -->
-                                <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="inline-block">
+                                <form action="{{ route('category.destroy', $item->id) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">

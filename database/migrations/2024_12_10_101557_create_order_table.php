@@ -22,10 +22,12 @@ return new class extends Migration
             $table->timestamps(); //created_at, updated_at
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->softDeletes();
             $table->unsignedTinyInteger('status');
         });
     }
+
 
     /**
      * Reverse the migrations.

@@ -9,16 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+
+    public function up()
     {
-        Schema::create('orderdetail', function (Blueprint $table) {
+        Schema::create('orderdetails', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('order_id');
-            $table->unsignedInteger('product_id');
-            $table->double('price');
-            $table->double('discount');
-            $table->unsignedInteger('qty');
-            $table->double('amount');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->decimal('price', 15, 2);
+            $table->decimal('discount', 15, 2)->default(0);
+            $table->integer('qty');
+            $table->decimal('amount', 15, 2);
         });
     }
 

@@ -24,44 +24,56 @@
                             <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">Tên Menu</th>
                             <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">Liên kết (URL)</th>
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-900">Vị trí</th>
+                            <th class="px-6 py-4 text-center text-sm font-medium text-gray-900">Loại</th>
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-900">Trạng thái</th>
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-900">Chức năng</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($menus as $item)
                         <tr class="border-b">
-                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">Trang Chủ</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->id }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">
-                                <a href="/" class="text-blue-500 hover:underline">/</a>
+                                <a href="{{ $item->link }}" class="text-blue-500 hover:underline">{{ $item->link }}</a>
                             </td>
-                            <td class="px-6 py-4 text-center text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4 text-center text-sm text-gray-900">{{ $item->position }}</td>
+                            <td class="px-6 py-4 text-center text-sm text-gray-900">{{ $item->type }}</td>
+
                             <td class="px-6 py-4 text-center text-sm text-gray-900">
-                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded">Hiển thị</span>
+                                @if($item->status === 1)
+                                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded">Hiển thị</span>
+                                @else
+                                    <span class="bg-red-100 text-red-700 px-2 py-1 rounded">Ẩn</span>
+                                @endif
                             </td>
                             <td class="flex px-7 py-8 text-center">
-                                <button class="bg-green-500 text-white px-4 py-2 m-1 rounded-md hover:bg-green-600 text-xs">
-                                    <i class="fa fa-toggle-on"></i>
-                                </button>
-
-                                <!-- Sửa (Edit) icon -->
-                                <button class="bg-green-500 text-white px-4 py-2 m-1  rounded-md hover:bg-green-600 text-xs">
-                                    <i class="fas fa-edit "></i>
-                                </button>
-                                <!-- Xem (View) icon -->
-                                <button class="bg-blue-500 text-white px-4 py-2 m-1  rounded-md hover:bg-blue-600 text-xs">
+                                <a href="{{ route('menu.status', $item->id) }}" class="bg-{{ $item->status ? 'green' : 'red' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $item->status ? 'green' : 'red' }}-600 text-xs">
+                                    <i class="fa {{ $item->status ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
+                                </a>
+                                <a href="{{ route('menu.edit', $item->id) }}" class="bg-green-500 text-white px-4 py-2 m-1 rounded-md hover:bg-green-600 text-xs">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ route('menu.show', $item->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
                                     <i class="fas fa-eye"></i>
-                                </button>
-                                <!-- Xóa (Delete) icon -->
-                                <button class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
+                                </a>
+                                <form action="{{ route('menu.destroy', $item->id) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
+                        @endforeach
+                        
 
                         <!-- Add more rows as needed -->
                     </tbody>
                 </table>
+                {{ $menus->links() }}
+
             </div>
         </div>
 </x-layout-admin>

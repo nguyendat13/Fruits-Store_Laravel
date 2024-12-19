@@ -29,35 +29,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($brands as $brand)
+                        @foreach($brands as $item)
                         <tr class="border-b">
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $brand->id }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->id }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">
-                                <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" class="rounded-md" width="100">
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="rounded-md" width="100">
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $brand->name }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $brand->slug }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ Str::limit($brand->description, 50) }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->name }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->slug }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ Str::limit($item->description, 50) }}</td>
                             <td class="px-6 py-4 text-center text-sm text-gray-900">
-                                <span class="bg-{{ $brand->status ? 'green' : 'gray' }}-100 text-{{ $brand->status ? 'green' : 'gray' }}-700 px-2 py-1 rounded">
-                                    {{ $brand->status ? 'Hiển thị' : 'Ẩn' }}
+                                <span class="bg-{{ $item->status ? 'green' : 'gray' }}-100 text-{{ $item->status ? 'green' : 'gray' }}-700 px-2 py-1 rounded">
+                                    {{ $item->status ? 'Hiển thị' : 'Ẩn' }}
                                 </span>
                             </td>
                             <td class="flex px-7 py-8 text-center">
                                 <!-- Trạng thái -->
-                                <a href="{{ route('brand.status', $brand->id) }}" class="bg-{{ $brand->status ? 'green' : 'gray' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $brand->status ? 'green' : 'gray' }}-600 text-xs">
-                                    <i class="fa {{ $brand->status ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
+                                <a href="{{ route('brand.status', $item->id) }}" class="bg-{{ $item->status ? 'green' : 'red' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $item->status ? 'green' : 'red' }}-600 text-xs">
+                                    <i class="fa {{ $item->status ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
                                 </a>
                                 <!-- Sửa (Edit) -->
-                                <a href="{{ route('brand.edit', $brand->id) }}" class="bg-green-500 text-white px-4 py-2 m-1 rounded-md hover:bg-green-600 text-xs">
+                                <a href="{{ route('brand.edit', $item->id) }}" class="bg-green-500 text-white px-4 py-2 m-1 rounded-md hover:bg-green-600 text-xs">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <!-- Xem (View) -->
-                                <a href="{{ route('brand.show', $brand->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
+                                <a href="{{ route('brand.show', $item->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <!-- Xóa (Delete) -->
-                                <form action="{{ route('brand.destroy', $brand->id) }}" method="POST" class="inline-block">
+                                <form action="{{ route('brand.destroy', $item->id) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">

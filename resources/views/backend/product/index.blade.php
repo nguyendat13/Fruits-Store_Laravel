@@ -40,7 +40,7 @@
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->brand->name ?? 'Không có thương hiệu' }}</td>
                             <td class="flex px-7 py-8 text-center">
                                 <!-- Trạng thái -->
-                                <a href="{{ route('backend.product.status', $item->id) }}" class="bg-{{ $item->status ? 'green' : 'gray' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $item->status ? 'green' : 'gray' }}-600 text-xs">
+                                <a href="{{ route('product.status', $item->id) }}" class="bg-{{ $item->status ? 'green' : 'red' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $item->status ? 'green' : 'red' }}-600 text-xs">
                                     <i class="fa {{ $item->status ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
                                 </a>
                                 <!-- Sửa (Edit) -->

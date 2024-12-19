@@ -17,8 +17,7 @@ class BrandController extends Controller
     {
 
         // Lấy danh sách các thương hiệu, chỉ lấy các thương hiệu có trạng thái 'active' (status = 1)
-        $brands = Brand::where('status', 1)
-            ->select("id", "name", "slug", "image", "description", "status")
+        $brands = Brand::select("id", "name", "slug", "image", "description", "status")
             ->orderBy('created_at', 'DESC')
             ->paginate(8);
 
