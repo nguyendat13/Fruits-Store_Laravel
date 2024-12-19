@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('name', 100);
             $table->string('phone', 255);
             $table->string('email', 255);
@@ -22,9 +22,9 @@ return new class extends Migration
             $table->timestamps(); //created_at, updated_at
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->softDeletes();
             $table->unsignedTinyInteger('status');
+            // $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 

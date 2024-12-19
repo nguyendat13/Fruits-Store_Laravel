@@ -16,7 +16,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::select("id", "title", "slug", "description", "thumbnail", "type", "status")
-            ->orderBy('created_at', 'DESC')->paginate(10);
+            ->orderBy('created_at', 'DESC')->paginate(5);
         return view('backend.post.index', compact('posts'));
     }
 

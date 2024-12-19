@@ -12,7 +12,6 @@ class Order extends Model
     use SoftDeletes;
 
     protected $table = 'order';
-    protected $fillable = ['name', 'phone', 'email', 'address', 'status', 'user_id'];
 
     // Liên kết với bảng users
     public function user(): BelongsTo
@@ -21,7 +20,7 @@ class Order extends Model
     }
 
     // Liên kết với bảng orderdetails
-    public function orderDetails(): HasMany
+    public function orderdetail(): HasMany
     {
         return $this->hasMany(OrderDetail::class, 'order_id');
     }

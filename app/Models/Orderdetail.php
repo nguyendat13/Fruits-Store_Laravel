@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderDetail extends Model
 {
-    protected $table = 'orderdetail'; 
+    protected $table = 'orderdetail';
     public $timestamps = false;
 
-    protected $fillable = ['order_id', 'product_id', 'price', 'discount', 'qty', 'amount'];
 
     // Liên kết với bảng orders
     public function order(): BelongsTo
