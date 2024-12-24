@@ -20,7 +20,10 @@ class OrderDetailController extends Controller
             ->with('product')->paginate(10);
         return view('backend.orderdetail.index', compact('orderDetails'));
     }
-
+    public function trash()
+    {
+        return view('backend.orderdetail.trash');
+    }
     /**
      * Show the form for creating a new resource.
      *

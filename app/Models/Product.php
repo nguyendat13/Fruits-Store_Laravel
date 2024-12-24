@@ -11,6 +11,7 @@ class Product extends Model
 {
     use SoftDeletes;
     protected $table = "product";
+    
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

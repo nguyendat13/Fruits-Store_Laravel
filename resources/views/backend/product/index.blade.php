@@ -52,7 +52,7 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <!-- Xóa (Delete) -->
-                                <form action="{{ route('product.destroy', $item->id) }}" method="POST" class="inline-block">
+                                <form action="{{ route('product.delete', $item->id) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">

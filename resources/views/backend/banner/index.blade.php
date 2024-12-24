@@ -11,8 +11,8 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold">Quản lý Banner</h1>
                 <div>
-                    <button href="" class="bg-green-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-green-600">Thêm Banner</button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Thùng rác</button>
+                    <a href="{{ route('banner.create') }}" class="bg-green-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-green-600">Thêm Banner</a>
+                    <a href="{{ route('banner.trash') }}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Thùng rác</a>
                 </div>
             </div>
 
@@ -55,13 +55,16 @@
                                 <a href="{{ route('banner.show', $item->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <form action="{{ route('banner.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('banner.delete', $item->id) }}" method="POST" onsubmit="
+                                    return confirm('Bạn có chắc chắn muốn xóa banner này không?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>
+                                
+                                
                             </td>
                         </tr>
                     @endforeach

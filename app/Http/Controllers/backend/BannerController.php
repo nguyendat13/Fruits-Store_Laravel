@@ -5,6 +5,8 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banner;  // Đảm bảo đã import model Banner
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class BannerController extends Controller
 {
@@ -21,6 +23,13 @@ class BannerController extends Controller
         return view('backend.banner.index', compact('banners'));
     }
 
+    public function trash()
+    {
+        $banners = Banner::onlyTrashed()
+            ->orderBy('deleted_at', 'DESC')
+            ->paginate(5);
+        return view('backend.banner.trash', compact('banners'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -28,9 +37,33 @@ class BannerController extends Controller
      */
     public function create()
     {
-        //
+        $banners = Banner::orderBy('sort_order', 'ASC')
+            ->select("id", "name", "sort_order")
+            ->get();
+        return view('backend.banner.create', compact('banners'));
     }
 
+    public function delete(string $id)
+    {
+        $banner = Banner::find($id);
+        if ($banner) {
+            $banner->delete();
+            return redirect()->route('banner.index')->with('success', 'Xóa banner thành công!');
+        }
+
+        return redirect()->route('banner.index')->with('error', 'Không tìm thấy banner!');
+    }
+
+    public function restore(string $id)
+    {
+        $banner = Banner::withTrashed()->where('id', $id);
+        if ($banner->first() != null) {
+            $banner->restore();
+            return redirect()->route('banner.trash')->with('success', 'Xóa banner thành công!');
+        }
+
+        return redirect()->route('banner.trash')->with('error', 'Không tìm thấy banner!');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -39,7 +72,27 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $banner = new Banner();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->extension();
+            $filename = date('YmdHis') . "." . $extension;
+            $file->move(public_path('images/banner'), $filename);
+            $banner->image = $filename;
+
+            $banner->name = $request->name;
+            $banner->link = $request->link;
+            $banner->position = $request->position;
+            $banner->description = $request->description;
+            $banner->sort_order = $request->sort_order;
+            $banner->created_by = Auth::id() ?? 1;
+            $banner->created_at = date('Y-m-d H:i:s');
+            $banner->status = $request->status ?? 0;
+            $banner->save();
+            return redirect()->route('banner.index')->with('success', 'them thanh cong');
+        } else {
+            return back()->with('error', 'chua chon hinh');
+        }
     }
 
     /**
@@ -84,6 +137,16 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $banner = Banner::withTrashed()->where('id', $id)->first();
+        if ($banner != null) {
+            if ($banner->image && File::exists(public_path("images/banner/" . $banner->image))) {
+                File::delete(public_path("images/banner/" . $banner->image));
+            }
+            $banner->forceDelete();
+
+            return redirect()->route("banner.trash")
+                ->with('success', 'xoa thanh cong');
+        }
+        return redirect()->route('banner.trash')->with('error', 'mẫu tin không còn tồn tại');
     }
 }

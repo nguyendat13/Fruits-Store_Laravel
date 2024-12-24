@@ -10,8 +10,8 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold">Quản lý Menu</h1>
                 <div>
-                    <button href="" class="bg-green-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-green-600">Thêm Mục Menu</button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Thùng rác</button>
+                    <a href="{{ route('menu.create') }}" class="bg-green-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-green-600">Thêm Mục Menu</a>
+                    <a href="{{ route('menu.trash') }}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Thùng rác</a>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                                 <a href="{{ route('menu.show', $item->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <form action="{{ route('menu.destroy', $item->id) }}" method="POST" class="inline-block">
+                                <form action="{{ route('menu.delete', $item->id) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">

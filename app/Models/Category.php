@@ -11,6 +11,7 @@ class Category extends Model
 {
     use SoftDeletes;
     protected $table = "category";
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);

@@ -4,7 +4,7 @@
     </x-slot:title>
   
     <!-- Main content -->
-    <div class="flex-1 relative left-[100px] p-6 w-[800px]">
+    <div class="flex-1 relative left-[100px] p-6 w-[1000px]">
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold">Quản lý chủ đề</h1>
@@ -35,7 +35,7 @@
                             {{-- <td class="px-6 py-4 text-center text-sm text-gray-900">
                                 {{ $item->posts_count }} <!-- Giả sử bạn có số bài viết liên quan -->
                             </td> --}}
-                            <td class="flex px-7 py-8 text-center">
+                            <td class="flex  py-6 text-center">
                                 <a href="{{ route('topic.status', $item->id) }}" class="bg-{{ $item->status == 1 ? 'green' : 'red' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $item->status == 1 ? 'green' : 'red' }}-600 text-xs">
                                     <i class="fa {{ $item->status == 1 ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
                                 </a>
@@ -45,7 +45,7 @@
                                 <a href="{{ route('topic.show', $item->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <form action="{{ route('topic.destroy', $item->id) }}" method="POST" class="inline-block">
+                                <form action="{{ route('topic.delete', $item->id) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('DELETE')   
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">

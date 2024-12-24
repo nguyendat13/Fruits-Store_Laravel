@@ -50,7 +50,7 @@
                                 <a href="{{ route('post.show', $item->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <form action="{{ route('post.destroy', $item->id) }}" method="POST" class="inline-block">
+                                <form action="{{ route('post.delete', $item->id) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('DELETE')   
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">

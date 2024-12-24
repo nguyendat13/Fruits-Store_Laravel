@@ -56,8 +56,9 @@ Route::prefix('admin')->group(function () {
     //Product
     Route::prefix('product')->group(function () {
         Route::get('trash', [ProductController::class, 'trash'])->name('product.trash');
-        Route::get('{product}/delete', [ProductController::class, 'delete'])->name('product.delete');
-        Route::get('{product}/restore', [ProductController::class, 'restore'])->name('product.restore');
+        Route::delete('{product}/delete', [ProductController::class, 'delete'])->name('product.delete'); //xoa vao thung rac
+        Route::delete('{product}/destroy', [ProductController::class, 'destroy'])->name('product.destroy');
+        Route::post('{product}/restore', [ProductController::class, 'restore'])->name('product.restore');
         Route::get("{product}/status", [ProductController::class, "status"])->name('product.status');
         Route::get("{product}/edit", [ProductController::class, "edit"])->name('product.edit'); // Route tĩnh trước
         Route::get("{product}/show", [ProductController::class, "show"])->name('product.show'); // Route tham số sau
@@ -68,8 +69,9 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('category')->group(function () {
         Route::get('trash', [CategoryController::class, 'trash'])->name('category.trash');
-        Route::get('{category}/delete', [CategoryController::class, 'delete'])->name('category.delete');
-        Route::get('{category}/restore', [CategoryController::class, 'restore'])->name('category.restore');
+        Route::delete('{category}/delete', [CategoryController::class, 'delete'])->name('category.delete');
+        Route::delete('{category}/destroy', [CategoryController::class, 'destroy'])->name('category.destroy');
+        Route::post('{category}/restore', [CategoryController::class, 'restore'])->name('category.restore');
         Route::get("{category}/status", [CategoryController::class, "status"])->name('category.status');
     });
     Route::resource('category', CategoryController::class);
@@ -77,8 +79,9 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('brand')->group(function () {
         Route::get('trash', [BrandController::class, 'trash'])->name('brand.trash');
-        Route::get('{brand}/delete', [BrandController::class, 'delete'])->name('brand.delete');
-        Route::get('{brand}/restore', [BrandController::class, 'restore'])->name('brand.restore');
+        Route::delete('{brand}/delete', [BrandController::class, 'delete'])->name('brand.delete');
+        Route::delete('{brand}/destroy', [BrandController::class, 'destroy'])->name('brand.destroy');
+        Route::post('{brand}/restore', [BrandController::class, 'restore'])->name('brand.restore');
         Route::get("{brand}/status", [BrandController::class, "status"])->name('brand.status');
         Route::get("{brand}/edit", [BrandController::class, "edit"])->name('brand.edit'); // Route tĩnh trước
         Route::get("{brand}/show", [BrandController::class, "show"])->name('brand.show'); // Route tham số sau
@@ -87,16 +90,18 @@ Route::prefix('admin')->group(function () {
     ///
     Route::prefix('post')->group(function () {
         Route::get('trash', [PostController::class, 'trash'])->name('post.trash');
-        Route::get('{post}/delete', [PostController::class, 'delete'])->name('post.delete');
-        Route::get('{post}/restore', [PostController::class, 'restore'])->name('post.restore');
+        Route::delete('{post}/delete', [PostController::class, 'delete'])->name('post.delete');
+        Route::delete('{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
+        Route::post('{post}/restore', [PostController::class, 'restore'])->name('post.restore');
         Route::get("{post}/status", [PostController::class, "status"])->name('post.status');
     });
     Route::resource('post', PostController::class);
     ///
     Route::prefix('topic')->group(function () {
         Route::get('trash', [TopicController::class, 'trash'])->name('topic.trash');
-        Route::get('{topic}/delete', [TopicController::class, 'delete'])->name('topic.delete');
-        Route::get('{topic}/restore', [TopicController::class, 'restore'])->name('topic.restore');
+        Route::delete('{topic}/delete', [TopicController::class, 'delete'])->name('topic.delete');
+        Route::delete('{topic}/destroy', [TopicController::class, 'destroy'])->name('topic.destroy');
+        Route::post('{topic}/restore', [TopicController::class, 'restore'])->name('topic.restore');
         Route::get("{topic}/status", [TopicController::class, "status"])->name('topic.status');
     });
     Route::resource('topic', TopicController::class);
@@ -104,8 +109,9 @@ Route::prefix('admin')->group(function () {
     ///
     Route::prefix('banner')->group(function () {
         Route::get('trash', [BannerController::class, 'trash'])->name('banner.trash');
-        Route::get('{banner}/delete', [BannerController::class, 'delete'])->name('banner.delete');
-        Route::get('{banner}/restore', [BannerController::class, 'restore'])->name('banner.restore');
+        Route::delete('{banner}/delete', [BannerController::class, 'delete'])->name('banner.delete');
+        Route::delete('{banner}/destroy', [BannerController::class, 'destroy'])->name('banner.destroy');
+        Route::post('{banner}/restore', [BannerController::class, 'restore'])->name('banner.restore');
         Route::get("{banner}/status", [BannerController::class, "status"])->name('banner.status');
     });
     Route::resource('banner', BannerController::class);
@@ -113,8 +119,10 @@ Route::prefix('admin')->group(function () {
     ///
     Route::prefix('menu')->group(function () {
         Route::get('trash', [MenuController::class, 'trash'])->name('menu.trash');
-        Route::get('{menu}/delete', [MenuController::class, 'delete'])->name('menu.delete');
-        Route::get('{menu}/restore', [MenuController::class, 'restore'])->name('menu.restore');
+        Route::delete('{menu}/delete', [MenuController::class, 'delete'])->name('menu.delete');
+        Route::delete('{menu}/destroy', [MenuController::class, 'destroy'])->name('menu.destroy');
+
+        Route::post('{menu}/restore', [MenuController::class, 'restore'])->name('menu.restore');
         Route::get("{menu}/status", [MenuController::class, "status"])->name('menu.status');
     });
     Route::resource('menu', MenuController::class);
@@ -122,8 +130,10 @@ Route::prefix('admin')->group(function () {
     ///
     Route::prefix('order')->group(function () {
         Route::get('trash', [OrderController::class, 'trash'])->name('order.trash');
-        Route::get('{order}/delete', [OrderController::class, 'delete'])->name('order.delete');
-        Route::get('{order}/restore', [OrderController::class, 'restore'])->name('order.restore');
+        Route::delete('{order}/delete', [OrderController::class, 'delete'])->name('order.delete');
+        Route::delete('{order}/destroy', [OrderController::class, 'destroy'])->name('order.destroy');
+
+        Route::post('{order}/restore', [OrderController::class, 'restore'])->name('order.restore');
         Route::get("{order}/status", [OrderController::class, "status"])->name('order.status');
     });
     Route::resource('order', OrderController::class);
@@ -131,16 +141,20 @@ Route::prefix('admin')->group(function () {
     ///
     Route::prefix('user')->group(function () {
         Route::get('trash', [UserController::class, 'trash'])->name('user.trash');
-        Route::get('{user}/delete', [UserController::class, 'delete'])->name('user.delete');
-        Route::get('{user}/restore', [UserController::class, 'restore'])->name('user.restore');
+        Route::delete('{user}/delete', [UserController::class, 'delete'])->name('user.delete');
+        Route::delete('{user}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
+
+        Route::post('{user}/restore', [UserController::class, 'restore'])->name('user.restore');
         Route::get("{user}/status", [UserController::class, "status"])->name('user.status');
     });
     Route::resource('user', UserController::class);
     ///
     Route::prefix('contact')->group(function () {
         Route::get('trash', [ContactController::class, 'trash'])->name('contact.trash');
-        Route::get('{contact}/delete', [ContactController::class, 'delete'])->name('contact.delete');
-        Route::get('{contact}/restore', [ContactController::class, 'restore'])->name('contact.restore');
+        Route::delete('{contact}/delete', [ContactController::class, 'delete'])->name('contact.delete');
+        Route::delete('{contact}/destroy', [ContactController::class, 'destroy'])->name('contact.destroy');
+
+        Route::post('{contact}/restore', [ContactController::class, 'restore'])->name('contact.restore');
         Route::get("{contact}/status", [ContactController::class, "status"])->name('contact.status');
     });
     Route::resource('contact', ContactController::class);

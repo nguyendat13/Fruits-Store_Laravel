@@ -2,18 +2,19 @@
     <x-slot:title>
         Đơn hàng
     </x-slot:title>
-    <div class="flex-1 p-6 relative left-[50px]">
+    <div class="flex-1 p-6 relative left-[50px] ">
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold">Quản lý Đơn Hàng</h1>
             <div>
-                <a href="" class="bg-green-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-green-600">Xuất Excel</a>
+                <a href="{{ route('order.trash') }}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Thùng rác</a>
+                <a href="" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Xuất Excel</a>
                 <a href="{{ route('order.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Tạo Đơn Hàng</a>
             </div>
         </div>
 
         <!-- Table -->
-        <div class="overflow-x-auto bg-white shadow-md rounded-md">
+        <div class="overflow-x-auto bg-white shadow-md rounded-md ">
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-200">
                     <tr>
@@ -51,7 +52,7 @@
                                 <a href="{{ route('order.show', $item->id) }}" class="bg-blue-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 text-xs">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <form action="{{ route('order.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                <form action="{{ route('order.delete', $item->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-red-600 text-xs">
