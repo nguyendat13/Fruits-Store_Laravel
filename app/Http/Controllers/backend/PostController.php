@@ -34,10 +34,10 @@ class PostController extends Controller
         $post = Post::find($id);
         if ($post) {
             $post->delete();
-            return redirect()->route('post.index')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('post.index')->with('success', 'Xóa post thành công!');
         }
 
-        return redirect()->route('post.index')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('post.index')->with('error', 'Không tìm thấy post!');
     }
 
     public function restore(string $id)
@@ -45,10 +45,10 @@ class PostController extends Controller
         $post = Post::withTrashed()->where('id', $id);
         if ($post->first() != null) {
             $post->restore();
-            return redirect()->route('post.trash')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('post.trash')->with('success', 'Xóa post thành công!');
         }
 
-        return redirect()->route('post.trash')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('post.trash')->with('error', 'Không tìm thấy post!');
     }
     /**
      * Show the form for creating a new resource.
@@ -105,7 +105,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        if (!$post) {
+            return redirect()->route('post.index')->with('error', 'post không tồn tại.');
+        }
+
+        return view('backend.post.show', compact('post'));
     }
 
     /**
@@ -116,8 +121,14 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $topics = Topic::all();
+        $post = Post::where('id', $id)->firstOrFail();
+        $posts = Post::select("id", "title", "status")
+            ->get();
+        $types = ['page', 'post']; // Các tùy chọn cho type
+        return view('backend.post.edit', compact('post', 'posts', 'topics', 'types'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -128,7 +139,29 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::where('id', $id)->first();
+        $post->topic_id = $request->topic_id;
+        $post->title = $request->title;
+
+        if ($request->hasFile('thumbnail')) {
+            if ($post->thumbnail && File::exists(public_path("storage/images/post/" . $post->thumbnail))) {
+                File::delete(public_path("storage/images/post/" . $post->thumbnail));
+            }
+            $file = $request->file('thumbnail');
+            $extension = $file->extension();
+            $filename = date('YmdHis') . "." . $extension;
+            $file->move(public_path('storage/images/post'), $filename);
+            $post->thumbnail = $filename;
+        }
+        $post->slug = $request->slug;
+        $post->description = $request->description;
+        $post->content = $request->content;
+        $post->type = $request->type;
+        $post->updated_by = Auth::id() ?? 1;
+        $post->updated_at = date('Y-m-d H:i:s');
+        $post->status = $request->status ?? 0;
+        $post->save();
+        return redirect()->route('post.index')->with('success', 'cap nhat thanh cong');
     }
 
     /**

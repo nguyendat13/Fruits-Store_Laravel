@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\Product;  // Đảm bảo đã import model Banner
+use App\Models\Product;  // Đảm bảo đã import model product
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -36,10 +36,10 @@ class ProductController extends Controller
         $product = Product::find($id);
         if ($product) {
             $product->delete();
-            return redirect()->route('product.index')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('product.index')->with('success', 'Xóa product thành công!');
         }
 
-        return redirect()->route('product.index')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('product.index')->with('error', 'Không tìm thấy product!');
     }
 
     public function restore(string $id)
@@ -47,10 +47,10 @@ class ProductController extends Controller
         $product = Product::withTrashed()->where('id', $id);
         if ($product->first() != null) {
             $product->restore();
-            return redirect()->route('product.trash')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('product.trash')->with('success', 'Xóa product thành công!');
         }
 
-        return redirect()->route('product.trash')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('product.trash')->with('error', 'Không tìm thấy product!');
     }
     /**
      * Show the form for creating a new resource.
@@ -109,7 +109,12 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return view('backend.product.edit');
+        $categories = Category::select('id', 'name')->get(); // Lấy danh sách categories
+        $brands = Brand::select('id', 'name')->get(); // Lấy danh sách brands
+        $product = Product::where('id', $id)->firstOrFail();
+        $products = Product::select("id", "name", "status")
+            ->get();
+        return view('backend.product.edit', compact('product', 'products', 'categories', 'brands'));
     }
 
     /**
@@ -120,7 +125,12 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return view('backend.product.show');
+        $product = Product::find($id);
+        if (!$product) {
+            return redirect()->route('product.index')->with('error', 'product không tồn tại.');
+        }
+
+        return view('backend.product.show', compact('product'));
     }
 
 
@@ -133,8 +143,35 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::where('id', $id)->first();
+
+        if ($request->hasFile('thumbnail')) {
+            if ($product->thumbnail && File::exists(public_path("storage/images/product/" . $product->thumbnail))) {
+                File::delete(public_path("storage/images/product/" . $product->thumbnail));
+            }
+            $file = $request->file('thumbnail');
+            $extension = $file->extension();
+            $filename = date('YmdHis') . "." . $extension;
+            $file->move(public_path('storage/images/product'), $filename);
+            $product->thumbnail = $filename;
+        }
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+        $product->name = $request->name;
+        $product->slug = $request->slug;
+        $product->content = $request->content;
+        $product->description = $request->description;
+        $product->price_buy = $request->price_buy;
+        $product->price_sale = $request->price_sale ?? 0; // Giá giảm có thể không bắt buộc
+        $product->qty = $request->qty;
+        $product->detail = $request->detail ?? '';
+        $product->status = $request->status ?? 0;
+        $product->updated_by = Auth::id() ?? 1;
+        $product->updated_at = date('Y-m-d H:i:s');
+        $product->save();
+        return redirect()->route('product.index')->with('success', 'cap nhat thanh cong');
     }
+
 
     /**
      * Remove the specified resource from storage.

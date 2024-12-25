@@ -4,7 +4,9 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class ContactController extends Controller
@@ -35,10 +37,10 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         if ($contact) {
             $contact->delete();
-            return redirect()->route('contact.index')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('contact.index')->with('success', 'Xóa contact thành công!');
         }
 
-        return redirect()->route('contact.index')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('contact.index')->with('error', 'Không tìm thấy contact!');
     }
 
     public function restore(string $id)
@@ -46,10 +48,10 @@ class ContactController extends Controller
         $contact = Contact::withTrashed()->where('id', $id);
         if ($contact->first() != null) {
             $contact->restore();
-            return redirect()->route('contact.trash')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('contact.trash')->with('success', 'Xóa contact thành công!');
         }
 
-        return redirect()->route('contact.trash')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('contact.trash')->with('error', 'Không tìm thấy contact!');
     }
     /**
      * Show the form for creating a new resource.
@@ -80,7 +82,12 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        //
+        $contact = Contact::find($id);
+        if (!$contact) {
+            return redirect()->route('contact.index')->with('error', 'contact không tồn tại.');
+        }
+
+        return view('backend.contact.show', compact('contact'));
     }
 
     /**
@@ -91,8 +98,13 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::all();
+        $contact = Contact::where('id', $id)->firstOrFail();
+        $contacts = Contact::select("id", "name", "status")
+            ->get();
+        return view('backend.contact.edit', compact('contact', 'contacts', 'users'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -103,8 +115,20 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contact = Contact::where('id', $id)->first();
+        $contact->user_id = $request->user_id;
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->phone = $request->phone;
+        $contact->title = $request->title;
+        $contact->content = $request->content;
+        $contact->updated_by = Auth::id() ?? 1;
+        $contact->updated_at = date('Y-m-d H:i:s');
+        $contact->status = $request->status ?? 0;
+        $contact->save();
+        return redirect()->route('contact.index')->with('success', 'cap nhat thanh cong');
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->unsignedInteger('sort_order');
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated-by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
             $table->unsignedInteger('status');
             $table->softDeletes();
             $table->timestamps();

@@ -32,10 +32,10 @@ class TopicController extends Controller
         $topic = Topic::find($id);
         if ($topic) {
             $topic->delete();
-            return redirect()->route('topic.index')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('topic.index')->with('success', 'Xóa topic thành công!');
         }
 
-        return redirect()->route('topic.index')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('topic.index')->with('error', 'Không tìm thấy topic!');
     }
 
     public function restore(string $id)
@@ -43,10 +43,10 @@ class TopicController extends Controller
         $topic = Topic::withTrashed()->where('id', $id);
         if ($topic->first() != null) {
             $topic->restore();
-            return redirect()->route('topic.trash')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('topic.trash')->with('success', 'Xóa topic thành công!');
         }
 
-        return redirect()->route('topic.trash')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('topic.trash')->with('error', 'Không tìm thấy topic!');
     }
     /**
      * Show the form for creating a new resource.
@@ -74,12 +74,12 @@ class TopicController extends Controller
         $topic->slug = $request->slug;
         $topic->sort_order = $request->sort_order;
         $topic->description = $request->description ?? ''; // Nếu không nhập description, gán giá trị rỗng
-        $topic->created_by =Auth::id() ?? 1;// Gán ID người tạo (nếu chưa login thì mặc định 1)
+        $topic->created_by = Auth::id() ?? 1; // Gán ID người tạo (nếu chưa login thì mặc định 1)
         $topic->created_at = now();
         $topic->status = $request->status;
-    
+
         $topic->save();
-    
+
         return redirect()->route('topic.index')->with('success', 'Thêm topic thành công!');
     }
 
@@ -91,7 +91,12 @@ class TopicController extends Controller
      */
     public function show($id)
     {
-        //
+        $topic = Topic::find($id);
+        if (!$topic) {
+            return redirect()->route('topic.index')->with('error', 'topic không tồn tại.');
+        }
+
+        return view('backend.topic.show', compact('topic'));
     }
 
     /**
@@ -102,8 +107,13 @@ class TopicController extends Controller
      */
     public function edit($id)
     {
-        //
+        $topic = Topic::where('id', $id)->firstOrFail();
+        $topics = Topic::orderBy('sort_order', 'ASC')
+            ->select("id", "name", "sort_order", "status")
+            ->get();
+        return view('backend.topic.edit', compact('topic', 'topics'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -114,8 +124,18 @@ class TopicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $topic = Topic::where('id', $id)->first();
+        $topic->name = $request->name;
+        $topic->slug = $request->slug;
+        $topic->description = $request->description;
+        $topic->sort_order = $request->sort_order;
+        $topic->updated_by = Auth::id() ?? 1;
+        $topic->updated_at = date('Y-m-d H:i:s');
+        $topic->status = $request->status ?? 0;
+        $topic->save();
+        return redirect()->route('topic.index')->with('success', 'cap nhat thanh cong');
     }
+
 
     /**
      * Remove the specified resource from storage.

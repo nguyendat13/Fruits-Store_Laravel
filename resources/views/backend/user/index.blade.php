@@ -20,6 +20,7 @@
                 <thead class="bg-gray-200">
                     <tr>
                         <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">#</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">Hình ảnh</th>
                         <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">Tên</th>
                         <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">Email</th>
                         <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">Số Điện Thoại</th>
@@ -32,6 +33,9 @@
                     @foreach ($users as $item)
                         <tr class="border-b">
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->id }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">
+                                <img src="{{ asset('storage/images/user/' . $item->thumbnail) }}" alt="{{ $item->thumbnail }}" class="rounded-md" width="100">
+                            </td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->fullname }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->email }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->phone }}</td>

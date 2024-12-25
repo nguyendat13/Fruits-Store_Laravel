@@ -113,6 +113,8 @@ Route::prefix('admin')->group(function () {
         Route::delete('{banner}/destroy', [BannerController::class, 'destroy'])->name('banner.destroy');
         Route::post('{banner}/restore', [BannerController::class, 'restore'])->name('banner.restore');
         Route::get("{banner}/status", [BannerController::class, "status"])->name('banner.status');
+        Route::get("{id}/edit", [BannerController::class, "edit"])->name('banner.edit'); // Route tĩnh trước
+
     });
     Route::resource('banner', BannerController::class);
 

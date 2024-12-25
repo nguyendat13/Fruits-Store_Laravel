@@ -40,6 +40,14 @@
                         @endif
                     </div>
 
+                    <div class="mb-4">
+                        <label for="link" class="block text-sm font-medium text-gray-700">Liên kết(url)</label>
+                        <input type="link" name="link" id="link" value="{{ old('link') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập" required>
+                        @if ($errors->has('link'))
+                            <div class="text-red-500 text-sm">{{ $errors->first('link') }}</div>
+                        @endif
+                    </div>
+
                     <!-- Hình ảnh -->
                     <div class="mb-4">
                         <label for="image" class="block text-sm font-medium text-gray-700">Hình ảnh</label>

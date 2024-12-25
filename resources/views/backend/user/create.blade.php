@@ -26,6 +26,23 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" id="email" required
+                               class="mt-1 block w-full px-4 py-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập email">
+                        @if ($errors->has('email'))
+                            <div class="text-red-500 text-sm">{{ $errors->first('email') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="phone" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+                        <input type="phone" name="phone" id="phone" required
+                               class="mt-1 block w-full px-4 py-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập số điện thoại">
+                        @if ($errors->has('phone'))
+                            <div class="text-red-500 text-sm">{{ $errors->first('phone') }}</div>
+                        @endif
+                    </div>
+                    <div class="mb-4">
                         <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
                         <input type="password" name="password" id="password" required
                                class="mt-1 block w-full px-4 py-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập mật khẩu">

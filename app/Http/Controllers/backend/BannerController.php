@@ -103,7 +103,12 @@ class BannerController extends Controller
      */
     public function show($id)
     {
-        //
+        $banner = Banner::find($id);
+        if (!$banner) {
+            return redirect()->route('banner.index')->with('error', 'Banner không tồn tại.');
+        }
+
+        return view('backend.banner.show', compact('banner'));
     }
 
     /**
@@ -114,7 +119,11 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner = Banner::where('id', $id)->firstOrFail();
+        $banners = Banner::orderBy('sort_order', 'ASC')
+            ->select("id", "name", "sort_order", "status")
+            ->get();
+        return view('backend.banner.edit', compact('banner', 'banners'));
     }
 
     /**
@@ -126,7 +135,28 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $banner = Banner::where('id', $id)->first();
+        $banner->name = $request->name;
+        $banner->link = $request->link;
+
+        if ($request->hasFile('image')) {
+            if ($banner->image && File::exists(public_path("storage/images/banner/" . $banner->image))) {
+                File::delete(public_path("storage/images/banner/" . $banner->image));
+            }
+            $file = $request->file('image');
+            $extension = $file->extension();
+            $filename = date('YmdHis') . "." . $extension;
+            $file->move(public_path('storage/images/banner'), $filename);
+            $banner->image = $filename;
+        }
+        $banner->position = $request->position;
+        $banner->description = $request->description;
+        $banner->sort_order = $request->sort_order;
+        $banner->updated_by = Auth::id() ?? 1;
+        $banner->updated_at = date('Y-m-d H:i:s');
+        $banner->status = $request->status ?? 0;
+        $banner->save();
+        return redirect()->route('banner.index')->with('success', 'cap nhat thanh cong');
     }
 
     /**

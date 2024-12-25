@@ -32,10 +32,10 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         if ($menu) {
             $menu->delete();
-            return redirect()->route('menu.index')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('menu.index')->with('success', 'Xóa menu thành công!');
         }
 
-        return redirect()->route('menu.index')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('menu.index')->with('error', 'Không tìm thấy menu!');
     }
 
     public function restore(string $id)
@@ -43,10 +43,10 @@ class MenuController extends Controller
         $menu = Menu::withTrashed()->where('id', $id);
         if ($menu->first() != null) {
             $menu->restore();
-            return redirect()->route('menu.trash')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('menu.trash')->with('success', 'Xóa menu thành công!');
         }
 
-        return redirect()->route('menu.trash')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('menu.trash')->with('error', 'Không tìm thấy menu!');
     }
     /**
      * Show the form for creating a new resource.
@@ -90,7 +90,12 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        //
+        $menu = Menu::find($id);
+        if (!$menu) {
+            return redirect()->route('menu.index')->with('error', 'menu không tồn tại.');
+        }
+
+        return view('backend.menu.show', compact('menu'));
     }
 
     /**
@@ -101,8 +106,13 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        //
+        $menu = Menu::where('id', $id)->firstOrFail();
+        $menus = Menu::orderBy('sort_order', 'ASC')
+            ->select("id", "name", "sort_order", "status")
+            ->get();
+        return view('backend.menu.edit', compact('menu', 'menus'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -113,8 +123,19 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $menu = Menu::where('id', $id)->first();
+        $menu->name = $request->name;
+        $menu->link = $request->link;
+        $menu->position = $request->position;
+        $menu->type = $request->type;
+        $menu->sort_order = $request->sort_order;
+        $menu->updated_by = Auth::id() ?? 1;
+        $menu->updated_at = date('Y-m-d H:i:s');
+        $menu->status = $request->status ?? 0;
+        $menu->save();
+        return redirect()->route('menu.index')->with('success', 'cap nhat thanh cong');
     }
+
 
     /**
      * Remove the specified resource from storage.

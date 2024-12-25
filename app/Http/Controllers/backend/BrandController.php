@@ -106,7 +106,12 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        //
+        $brand = Brand::find($id);
+        if (!$brand) {
+            return redirect()->route('brand.index')->with('error', 'brand không tồn tại.');
+        }
+
+        return view('backend.brand.show', compact('brand'));
     }
 
     /**
@@ -117,9 +122,12 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        //
+        $brand = Brand::where('id', $id)->firstOrFail();
+        $brands = Brand::orderBy('sort_order', 'ASC')
+            ->select("id", "name", "sort_order", "status")
+            ->get();
+        return view('backend.brand.edit', compact('brand', 'brands'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -129,8 +137,29 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $brand = Brand::where('id', $id)->first();
+        $brand->name = $request->name;
+        $brand->slug = $request->slug;
+
+        if ($request->hasFile('image')) {
+            if ($brand->image && File::exists(public_path("storage/images/brand/" . $brand->image))) {
+                File::delete(public_path("storage/images/brand/" . $brand->image));
+            }
+            $file = $request->file('image');
+            $extension = $file->extension();
+            $filename = date('YmdHis') . "." . $extension;
+            $file->move(public_path('storage/images/brand'), $filename);
+            $brand->image = $filename;
+        }
+        $brand->description = $request->description;
+        $brand->sort_order = $request->sort_order;
+        $brand->updated_by = Auth::id() ?? 1;
+        $brand->updated_at = date('Y-m-d H:i:s');
+        $brand->status = $request->status ?? 0;
+        $brand->save();
+        return redirect()->route('brand.index')->with('success', 'cap nhat thanh cong');
     }
+
 
     /**
      * Remove the specified resource from storage.

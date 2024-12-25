@@ -36,10 +36,10 @@ class CategoryController extends Controller
         $category = Category::find($id);
         if ($category) {
             $category->delete();
-            return redirect()->route('category.index')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('category.index')->with('success', 'Xóa category thành công!');
         }
 
-        return redirect()->route('category.index')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('category.index')->with('error', 'Không tìm thấy category!');
     }
 
     public function restore(string $id)
@@ -47,10 +47,10 @@ class CategoryController extends Controller
         $category = Category::withTrashed()->where('id', $id);
         if ($category->first() != null) {
             $category->restore();
-            return redirect()->route('category.trash')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('category.trash')->with('success', 'Xóa category thành công!');
         }
 
-        return redirect()->route('category.trash')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('category.trash')->with('error', 'Không tìm thấy category!');
     }
     /**
      * Show the form for creating a new resource.
@@ -78,7 +78,7 @@ class CategoryController extends Controller
             $file = $request->file('image');
             $extension = $file->extension();
             $filename = date('YmdHis') . "." . $extension;
-            $file->move(public_path('images/category'), $filename);
+            $file->move(public_path('storage/images/category/'), $filename);
             $category->image = $filename;
 
             $category->name = $request->name;
@@ -103,7 +103,12 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+        if (!$category) {
+            return redirect()->route('category.index')->with('error', 'category không tồn tại.');
+        }
+
+        return view('backend.category.show', compact('category'));
     }
 
     /**
@@ -114,8 +119,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::where('id', $id)->firstOrFail();
+        $categorys = Category::orderBy('sort_order', 'ASC')
+            ->select("id", "name", "sort_order", "status")
+            ->get();
+        return view('backend.category.edit', compact('category', 'categorys'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -126,8 +136,29 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::where('id', $id)->first();
+        $category->name = $request->name;
+        $category->slug = $request->slug;
+
+        if ($request->hasFile('image')) {
+            if ($category->image && File::exists(public_path("storage/images/category/" . $category->image))) {
+                File::delete(public_path("storage/images/category/" . $category->image));
+            }
+            $file = $request->file('image');
+            $extension = $file->extension();
+            $filename = date('YmdHis') . "." . $extension;
+            $file->move(public_path('storage/images/category'), $filename);
+            $category->image = $filename;
+        }
+        $category->description = $request->description;
+        $category->sort_order = $request->sort_order;
+        $category->updated_by = Auth::id() ?? 1;
+        $category->updated_at = date('Y-m-d H:i:s');
+        $category->status = $request->status ?? 0;
+        $category->save();
+        return redirect()->route('category.index')->with('success', 'cap nhat thanh cong');
     }
+
 
     /**
      * Remove the specified resource from storage.

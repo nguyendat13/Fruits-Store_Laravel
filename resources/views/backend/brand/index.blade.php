@@ -33,7 +33,7 @@
                         <tr class="border-b">
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->id }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">
-                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="rounded-md" width="100">
+                                <img src="{{ asset('storage/images/brand/' . $item->image) }}" alt="{{ $item->image }}" class="rounded-md" width="100">
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->slug }}</td>

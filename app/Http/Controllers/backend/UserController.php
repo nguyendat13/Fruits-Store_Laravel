@@ -32,10 +32,10 @@ class UserController extends Controller
         $user = User::find($id);
         if ($user) {
             $user->delete();
-            return redirect()->route('user.index')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('user.index')->with('success', 'Xóa user thành công!');
         }
 
-        return redirect()->route('user.index')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('user.index')->with('error', 'Không tìm thấy user!');
     }
 
     public function restore(string $id)
@@ -43,10 +43,10 @@ class UserController extends Controller
         $user = User::withTrashed()->where('id', $id);
         if ($user->first() != null) {
             $user->restore();
-            return redirect()->route('user.trash')->with('success', 'Xóa banner thành công!');
+            return redirect()->route('user.trash')->with('success', 'Xóa user thành công!');
         }
 
-        return redirect()->route('user.trash')->with('error', 'Không tìm thấy banner!');
+        return redirect()->route('user.trash')->with('error', 'Không tìm thấy user!');
     }
     /**
      * Show the form for creating a new resource.
@@ -101,7 +101,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->route('user.index')->with('error', 'user không tồn tại.');
+        }
+
+        return view('backend.user.show', compact('user'));
     }
 
     /**
@@ -112,8 +117,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::where('id', $id)->firstOrFail();
+        $users = User::select("id", "name", "status")
+            ->get();
+        return view('backend.user.edit', compact('user', 'users'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -124,8 +133,37 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::where('id', $id)->first();
+        $user->name = $request->name;
+        // Chỉ cập nhật mật khẩu nếu có giá trị mới
+        if ($request->password) {
+            $user->password = bcrypt($request->password); // Mã hóa mật khẩu mới
+        }
+
+        if ($request->hasFile('thumbnail')) {
+            if ($user->thumbnail && File::exists(public_path("storage/images/user/" . $user->thumbnail))) {
+                File::delete(public_path("storage/images/user/" . $user->thumbnail));
+            }
+            $file = $request->file('thumbnail');
+            $extension = $file->extension();
+            $filename = date('YmdHis') . "." . $extension;
+            $file->move(public_path('storage/images/user'), $filename);
+            $user->thumbnail = $filename;
+        }
+        $user->fullname = $request->fullname;
+        $user->gender = $request->gender;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->roles = $request->roles;
+
+        $user->updated_by = Auth::id() ?? 1;
+        $user->updated_at = date('Y-m-d H:i:s');
+        $user->status = $request->status ?? 0;
+        $user->save();
+        return redirect()->route('user.index')->with('success', 'cap nhat thanh cong');
     }
+
 
     /**
      * Remove the specified resource from storage.
