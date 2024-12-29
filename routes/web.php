@@ -113,8 +113,6 @@ Route::prefix('admin')->group(function () {
         Route::delete('{banner}/destroy', [BannerController::class, 'destroy'])->name('banner.destroy');
         Route::post('{banner}/restore', [BannerController::class, 'restore'])->name('banner.restore');
         Route::get("{banner}/status", [BannerController::class, "status"])->name('banner.status');
-        Route::get("{id}/edit", [BannerController::class, "edit"])->name('banner.edit'); // Route tĩnh trước
-
     });
     Route::resource('banner', BannerController::class);
 
@@ -123,7 +121,6 @@ Route::prefix('admin')->group(function () {
         Route::get('trash', [MenuController::class, 'trash'])->name('menu.trash');
         Route::delete('{menu}/delete', [MenuController::class, 'delete'])->name('menu.delete');
         Route::delete('{menu}/destroy', [MenuController::class, 'destroy'])->name('menu.destroy');
-
         Route::post('{menu}/restore', [MenuController::class, 'restore'])->name('menu.restore');
         Route::get("{menu}/status", [MenuController::class, "status"])->name('menu.status');
     });
@@ -134,7 +131,6 @@ Route::prefix('admin')->group(function () {
         Route::get('trash', [OrderController::class, 'trash'])->name('order.trash');
         Route::delete('{order}/delete', [OrderController::class, 'delete'])->name('order.delete');
         Route::delete('{order}/destroy', [OrderController::class, 'destroy'])->name('order.destroy');
-
         Route::post('{order}/restore', [OrderController::class, 'restore'])->name('order.restore');
         Route::get("{order}/status", [OrderController::class, "status"])->name('order.status');
     });
@@ -145,7 +141,6 @@ Route::prefix('admin')->group(function () {
         Route::get('trash', [UserController::class, 'trash'])->name('user.trash');
         Route::delete('{user}/delete', [UserController::class, 'delete'])->name('user.delete');
         Route::delete('{user}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
-
         Route::post('{user}/restore', [UserController::class, 'restore'])->name('user.restore');
         Route::get("{user}/status", [UserController::class, "status"])->name('user.status');
     });
@@ -155,7 +150,6 @@ Route::prefix('admin')->group(function () {
         Route::get('trash', [ContactController::class, 'trash'])->name('contact.trash');
         Route::delete('{contact}/delete', [ContactController::class, 'delete'])->name('contact.delete');
         Route::delete('{contact}/destroy', [ContactController::class, 'destroy'])->name('contact.destroy');
-
         Route::post('{contact}/restore', [ContactController::class, 'restore'])->name('contact.restore');
         Route::get("{contact}/status", [ContactController::class, "status"])->name('contact.status');
     });

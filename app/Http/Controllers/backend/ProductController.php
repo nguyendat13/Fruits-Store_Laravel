@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -12,6 +14,17 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    public function status($id)
+    {
+        $product = Product::findOrFail($id);
+
+        // Đổi trạng thái
+        $product->status = !$product->status;
+        $product->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('product.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -71,7 +84,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         $product = new Product();
 
@@ -141,7 +154,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         $product = Product::where('id', $id)->first();
 
@@ -192,10 +205,5 @@ class ProductController extends Controller
                 ->with('success', 'xoa thanh cong');
         }
         return redirect()->route('product.trash')->with('error', 'mẫu tin không còn tồn tại');
-    }
-
-    public function status($id)
-    {
-        //
     }
 }

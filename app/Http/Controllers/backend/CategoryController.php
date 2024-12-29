@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,17 @@ use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
+    public function status($id)
+    {
+        $category = Category::findOrFail($id);
+
+        // Đổi trạng thái
+        $category->status = !$category->status;
+        $category->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('category.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -71,7 +84,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         $category = new Category();
         if ($request->hasFile('image')) {
@@ -134,7 +147,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
         $category = Category::where('id', $id)->first();
         $category->name = $request->name;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,17 @@ use Illuminate\Support\Facades\File;
 
 class OrderController extends Controller
 {
+    public function status($id)
+    {
+        $order = Order::findOrFail($id);
+
+        // Đổi trạng thái
+        $order->status = !$order->status;
+        $order->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('order.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -100,7 +112,7 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateOrderRequest $request, $id)
     {
         $order = Order::where('id', $id)->first();
         $order->user_id = $request->user_id;

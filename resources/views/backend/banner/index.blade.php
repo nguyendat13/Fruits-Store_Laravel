@@ -46,9 +46,11 @@
                                 </span>
                             </td>
                             <td class="flex px-7 py-8 text-center">
-                                <a href="{{ route('banner.status', $item->id) }}" class="bg-{{ $item->status ? 'green' : 'red' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $item->status ? 'green' : 'red' }}-600 text-xs">
-                                    <i class="fa {{ $item->status ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
-                                </a>
+                                <a href="{{ route('banner.status', $item->id) }}" 
+                                    class="bg-{{ $item->status ? 'green' : 'red' }}-500 text-white px-4 py-2 m-1 rounded-md hover:bg-{{ $item->status ? 'green' : 'red' }}-600 text-xs">
+                                     <i class="fa {{ $item->status ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i>
+                                 </a>                                 
+                                 
                                 <a href="{{ route('banner.edit', $item->id) }}" class="bg-green-500 text-white px-4 py-2 m-1 rounded-md hover:bg-green-600 text-xs">
                                     <i class="fas fa-edit"></i>
                                 </a>

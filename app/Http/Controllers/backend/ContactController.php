@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateContactRequest;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,6 +12,17 @@ use Illuminate\Support\Facades\File;
 
 class ContactController extends Controller
 {
+    public function status($id)
+    {
+        $contact = Contact::findOrFail($id);
+
+        // Đổi trạng thái
+        $contact->status = !$contact->status;
+        $contact->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('contact.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -113,7 +125,7 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateContactRequest $request, $id)
     {
         $contact = Contact::where('id', $id)->first();
         $contact->user_id = $request->user_id;

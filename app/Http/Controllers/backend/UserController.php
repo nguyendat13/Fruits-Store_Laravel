@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,17 @@ use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
+    public function status($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Đổi trạng thái
+        $user->status = !$user->status;
+        $user->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('user.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -64,7 +77,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
 
         $user = new User();
@@ -131,7 +144,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         $user = User::where('id', $id)->first();
         $user->name = $request->name;

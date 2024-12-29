@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBannerRequest;
+use App\Http\Requests\UpdateBannerRequest;
 use Illuminate\Http\Request;
 use App\Models\Banner;  // Đảm bảo đã import model Banner
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,18 @@ use Illuminate\Support\Facades\File;
 
 class BannerController extends Controller
 {
+    public function status($id)
+    {
+        $banner = Banner::findOrFail($id);
+
+        // Đổi trạng thái
+        $banner->status = !$banner->status;
+        $banner->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('banner.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -70,7 +84,7 @@ class BannerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBannerRequest $request)
     {
         $banner = new Banner();
         if ($request->hasFile('image')) {
@@ -133,7 +147,7 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBannerRequest $request, $id)
     {
         $banner = Banner::where('id', $id)->first();
         $banner->name = $request->name;

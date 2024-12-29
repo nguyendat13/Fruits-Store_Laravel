@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
 use Illuminate\Http\Request;
 use App\Models\Brand;  // Đảm bảo đã import model brand
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,17 @@ use Illuminate\Support\Facades\File;
 
 class BrandController extends Controller
 {
+    public function status($id)
+    {
+        $brand = Brand::findOrFail($id);
+
+        // Đổi trạng thái
+        $brand->status = !$brand->status;
+        $brand->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('brand.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -74,7 +87,7 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBrandRequest $request)
     {
         $brand = new Brand();
         if ($request->hasFile('image')) {
@@ -135,7 +148,7 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBrandRequest $request, $id)
     {
         $brand = Brand::where('id', $id)->first();
         $brand->name = $request->name;

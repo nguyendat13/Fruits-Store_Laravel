@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTopicRequest;
+use App\Http\Requests\UpdateTopicRequest;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,17 @@ use Illuminate\Support\Facades\File;
 
 class TopicController extends Controller
 {
+    public function status($id)
+    {
+        $topic = Topic::findOrFail($id);
+
+        // Đổi trạng thái
+        $topic->status = !$topic->status;
+        $topic->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('topic.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -67,7 +80,7 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTopicRequest $request)
     {
         $topic = new Topic();
         $topic->name = $request->name;
@@ -122,7 +135,7 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTopicRequest $request, $id)
     {
         $topic = Topic::where('id', $id)->first();
         $topic->name = $request->name;

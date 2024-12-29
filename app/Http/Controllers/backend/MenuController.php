@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMenuRequest;
+use App\Http\Requests\UpdateMenuRequest;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,17 @@ use Illuminate\Support\Facades\File;
 
 class MenuController extends Controller
 {
+    public function status($id)
+    {
+        $menu = Menu::findOrFail($id);
+
+        // Đổi trạng thái
+        $menu->status = !$menu->status;
+        $menu->save();
+
+        // Chuyển hướng về trang trước đó với thông báo
+        return redirect()->route('menu.index')->with('success', 'Cập nhật trạng thái thành công!');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -67,7 +80,7 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMenuRequest $request)
     {
         $menu = new Menu();
         $menu->name = $request->name;
@@ -121,7 +134,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMenuRequest $request, $id)
     {
         $menu = Menu::where('id', $id)->first();
         $menu->name = $request->name;
