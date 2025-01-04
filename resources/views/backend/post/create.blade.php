@@ -64,10 +64,10 @@
 
                     <!-- Hình ảnh đại diện -->
                     <div class="mb-4">
-                        <label for="image" class="block text-sm font-medium text-gray-700">Hình ảnh đại diện</label>
-                        <input type="file" name="image" id="image" class="mt-1 block w-full">
-                        @if ($errors->has('image'))
-                            <div class="text-red-500 text-sm">{{ $errors->first('image') }}</div>
+                        <label for="thumbnail" class="block text-sm font-medium text-gray-700">Hình ảnh đại diện</label>
+                        <input type="file" name="thumbnail" id="thumbnail" class="mt-1 block w-full">
+                        @if ($errors->has('thumbnail'))
+                            <div class="text-red-500 text-sm">{{ $errors->first('thumbnail') }}</div>
                         @endif
                     </div>
 

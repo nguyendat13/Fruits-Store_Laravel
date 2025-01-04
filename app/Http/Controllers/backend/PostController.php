@@ -87,11 +87,11 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $post = new Post();
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
             $extension = $file->extension();
             $filename = date('YmdHis') . "." . $extension;
-            $file->move(public_path('images/post'), $filename);
+            $file->move(public_path('storage/images/post/'), $filename);
             $post->thumbnail = $filename;
 
             $post->topic_id = $request->topic_id;

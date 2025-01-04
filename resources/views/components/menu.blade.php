@@ -5,10 +5,5 @@
     </a>
 
     <!-- Navigation -->
-    <nav class="relative ml-8 m-6 space-x-4 text-xl bg-" style="left:350px; bottom:20px;padding-left:50px;">
-        <a href="/public" class="text-gray-700 hover:text-lime-500 transition duration-300">Trang chủ</a>
-        <a href="/public/san-pham" class="text-gray-700 hover:text-lime-500 transition duration-300">Cửa hàng</a>
-        <a href="/public/ve-chung-toi" class="text-gray-700 hover:text-lime-500 transition duration-300">Về chúng tôi</a>
-        <a href="/public/lien-he" class="text-gray-700 hover:text-lime-500 transition duration-300">Liên hệ</a>
-    </nav>
+     <x-main-menu/>
 </div>

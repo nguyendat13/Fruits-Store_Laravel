@@ -12,6 +12,7 @@ use App\Http\Controllers\frontend\OrderController as DonhangController;
 use App\Http\Controllers\frontend\UserController as TaikhoanController;
 use App\Http\Controllers\frontend\LoginController as DangnhapController;
 use App\Http\Controllers\frontend\RegisterController as DangkyController;
+use App\Http\Controllers\frontend\PostsController as BaivietController;
 
 //Controller trang quản trị
 use App\Http\Controllers\backend\DashboardController;
@@ -40,7 +41,7 @@ use App\Http\Controllers\backend\UserController;
 //Route trang người dùng
 Route::get('/public', [TrangchuController::class, 'index'])->name('frontend.home');
 Route::get('/public/san-pham', [SanphamController::class, 'index'])->name('frontend.product');
-Route::get('/public/san-pham/{slug}', [SanphamController::class, 'detail'])->name('frontend.product.detail');
+Route::get('/public/san-pham/{slug}', [SanphamController::class, 'detail'])->name('frontend.product-detail');
 Route::get('/public/lien-he', [LienheController::class, 'index'])->name('frontend.contact');
 Route::get('/public/ve-chung-toi', [VechungtoiController::class, 'index'])->name('frontend.about_us');
 Route::get('/public/gio-hang', [GiohangController::class, 'index'])->name('frontend.cart');
@@ -49,6 +50,8 @@ Route::get('/public/don-hang', [DonhangController::class, 'index'])->name('front
 Route::get('/public/tai-khoan', [TaikhoanController::class, 'index'])->name('frontend.user');
 Route::get('/public/dang-nhap', [DangnhapController::class, 'index'])->name('frontend.login');
 Route::get('/public/dang-ky', [DangkyController::class, 'index'])->name('frontend.register');
+// Route cho bài viết chi tiết
+Route::get('/public/bai-viet/{slug}', [PostController::class, 'show'])->name('frontend.post-detail');
 
 
 Route::prefix('admin')->group(function () {

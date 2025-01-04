@@ -23,7 +23,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'image'=>'required|image|mimes:jpeg,png,jpg,gif,webp',
+            'thumbnail'=>'required|image|mimes:jpeg,png,jpg,gif,webp',
         ];
 
     }
@@ -31,9 +31,9 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name.required'=>'Ten bat buoc nhap.',
-            'image.required'=>'Vui long chon 1 hinh anh.',
-            'image.image'=>'Tep tai len phai la mot hinh anh.',
-            'image.mimes'=>'Hinh anh phai thuoc cac dinh dang: jpeg,png,jpg,gid,webp.',
+            'thumbnail.required'=>'Vui long chon 1 hinh anh.',
+            'thumbnail.image'=>'Tep tai len phai la mot hinh anh.',
+            'thumbnail.mimes'=>'Hinh anh phai thuoc cac dinh dang: jpeg,png,jpg,gid,webp.',
         ];
     }
 }

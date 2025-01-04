@@ -43,7 +43,7 @@
                                required>
                     </div>
 
-                    {{-- <!-- Hình ảnh -->
+                    <!-- Hình ảnh -->
                     <div class="mb-4">
                         <label for="thumbnail" class="block text-sm font-medium text-gray-700">Hình ảnh</label>
                         <input type="file" name="thumbnail" id="thumbnail" class="mt-1">
@@ -52,7 +52,7 @@
                                 <img src="{{ asset('storage/images/post/' . $post->thumbnail) }}" alt="{{ $post->title }}" class="w-32">
                             </div>
                         @endif
-                    </div> --}}
+                    </div>
 
                     <!-- Slug -->
                     <div class="mb-4">

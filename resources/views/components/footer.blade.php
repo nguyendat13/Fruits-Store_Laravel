@@ -26,10 +26,10 @@
             <div>
                 <h3 class="text-xl font-bold mb-4">Chính sách</h3>
                 <ul class="text-gray-400 space-y-2 text-sm">
-                    <li><a href="/chinh-sach/bao-mat" class="hover:text-lime-500">Chính sách bảo mật</a></li>
-                    <li><a href="/chinh-sach/doi-tra" class="hover:text-lime-500">Chính sách đổi trả</a></li>
-                    <li><a href="/chinh-sach/van-chuyen" class="hover:text-lime-500">Chính sách vận chuyển</a></li>
-                    <li><a href="/chinh-sach/thanh-toan" class="hover:text-lime-500">Chính sách thanh toán</a></li>
+                    <li><a href="/chinh-sach-bao-mat" class="hover:text-lime-500">Chính sách bảo mật</a></li>
+                    <li><a href="/chinh-sach-doi-tra" class="hover:text-lime-500">Chính sách đổi trả</a></li>
+                    <li><a href="/chinh-sach-van-chuyen" class="hover:text-lime-500">Chính sách vận chuyển</a></li>
+                    <li><a href="/chinh-sach-thanh-toan" class="hover:text-lime-500">Chính sách thanh toán</a></li>
                 </ul>
             </div>
 
@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-
+        <x-menu-footer/>
         <!-- Dòng bản quyền -->
         <div class="border-t border-gray-700 pt-4 text-center text-sm text-gray-500">
             © 2024 Công ty của bạn. Bảo lưu mọi quyền. | Thiết kế bởi <a href="#" class="text-lime-500 hover:underline">Fruitables</a>

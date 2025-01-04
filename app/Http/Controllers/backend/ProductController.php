@@ -92,7 +92,7 @@ class ProductController extends Controller
             $file = $request->file('thumbnail');
             $extension = $file->getClientOriginalExtension();
             $filename = date('YmdHis') . "." . $extension;
-            $file->move(public_path('images/product'), $filename);
+            $file->move(public_path('storage/images/product/'), $filename);
             $product->thumbnail = $filename;
         }
         $product->category_id = $request->category_id;
@@ -182,7 +182,7 @@ class ProductController extends Controller
         $product->updated_by = Auth::id() ?? 1;
         $product->updated_at = date('Y-m-d H:i:s');
         $product->save();
-        return redirect()->route('product.index')->with('success', 'cap nhat thanh cong');
+        return redirect()->route('product.index')->with('success', 'cap nhat thanh cong')->header('Debug-Redirect', 'true');
     }
 
 
@@ -196,8 +196,8 @@ class ProductController extends Controller
     {
         $product = Product::withTrashed()->where('id', $id)->first();
         if ($product != null) {
-            if ($product->image && File::exists(public_path("images/product/" . $product->image))) {
-                File::delete(public_path("images/product/" . $product->image));
+            if ($product->image && File::exists(public_path("storage/images/product/" . $product->image))) {
+                File::delete(public_path("storage/images/product/" . $product->image));
             }
             $product->forceDelete();
 

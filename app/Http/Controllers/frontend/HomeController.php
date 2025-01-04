@@ -1,14 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\frontend;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
-    function index()
+    public function index()
     {
-        return view('frontend.home');
+        $categories = Category::where('status', 1)
+            ->where('parent_id', 0)
+            ->orderBy('sort_order', 'DESC')
+            ->get();
+
+        $products = Product::where('status', 1)
+            ->orderBy('created_at', 'DESC')
+            ->limit(12) // Giới hạn số sản phẩm
+            ->get();
+
+        $products = Product::where('price_sale', '>', 0)
+            ->limit(3)
+            ->get();  // Lấy sản phẩm có giảm giá
+
+        return view('frontend.home', compact('categories', 'products'));
     }
 }

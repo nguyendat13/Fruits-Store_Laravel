@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 1000);
             $table->string('link', 1000)->nullable();
             $table->string('image', 1000);
-            $table->enum('position', ['slideshow', 'ads'])->default('slideshow');
+            $table->enum('position', ['slideshow', 'banner'])->default('slideshow');
             $table->text('description');
             $table->unsignedInteger('sort_order');
             $table->unsignedInteger('created_by');
