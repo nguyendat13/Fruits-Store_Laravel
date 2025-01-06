@@ -1,6 +1,10 @@
 <x-layout-admin>
     <div class="min-h-screen flex items-center justify-center bg-gray-100">
         <div class="w-full max-w-sm bg-white p-6 rounded-lg shadow-lg">
+            {{-- @if(Auth::check())
+            <a href="{{ route('dashboard.index')}}" class="text-center mb-4">Chào, {{ Auth::user()->name }}! Bạn đã đăng nhập.</a>
+
+        @else --}}
             <h2 class="text-2xl font-semibold text-center mb-4">Đăng Nhập</h2>
 
             {{-- Form đăng nhập --}}
@@ -51,7 +55,7 @@
                     Đăng Nhập
                 </button>
             </form>
-
+            {{-- @endif --}}
             @if (session('error'))
             <div class="bg-red-100 text-red-700 px-4 py-2 rounded mt-4">
                 <ul class="list-disc pl-5">

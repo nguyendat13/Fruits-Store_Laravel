@@ -25,8 +25,8 @@ class LoginAdmin
         $user = Auth::user();
 
         // Kiểm tra quyền admin
-        if ($user->roles !== 'admin') {
-            return redirect()->route('site.home')->with('error', 'Bạn không có quyền truy cập!');
+        if ($user->roles !== 'admin' && $user->status !== 1) {
+            return redirect()->route('admin.login')->with('error', 'Bạn không có quyền truy cập!');
         }
 
         return $next($request);

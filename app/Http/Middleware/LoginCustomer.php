@@ -17,14 +17,14 @@ class LoginCustomer
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect()->route('site.login')->with('warning', 'Vui lòng đăng nhập để truy cập!');
+            return redirect()->route('site.login')->with('error', 'Vui lòng đăng nhập!');
         }
 
         $user = Auth::user();
 
-        // Kiểm tra quyền của người dùng
-        if ($user->roles !== 'customer') {
-            return redirect()->route('admin.home')->with('error', 'Bạn không có quyền truy cập!');
+        // Kiểm tra quyền admin
+        if ($user->roles !== 'customer' && $user->status !== 2) {
+            return redirect()->route('site.login')->with('error', 'Bạn không có quyền truy cập!');
         }
 
         return $next($request);

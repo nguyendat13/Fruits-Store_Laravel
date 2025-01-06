@@ -53,4 +53,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // Kiểm tra xem người dùng có phải là admin hay không
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    // Kiểm tra xem người dùng có phải là customer hay không
+    public function isCustomer(): bool
+    {
+        return $this->role === 'customer';
+    }
 }

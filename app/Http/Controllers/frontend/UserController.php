@@ -20,82 +20,89 @@ class UserController extends Controller
         return view('frontend.login'); // Hiển thị form đăng nhập
     }
 
-    // public function dologin(Request $request)
-    // {
-    //     $email = $request->email;
-    //     $password = $request->password;
-    //     $args = [
-    //         ['status', '=', 1],
-    //     ];
-    //     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    //         $args[] = ['email', '=', $email];
-    //     } else {
-    //         $args[] = ['username', '=', $email];
-    //     }
-    //     $user = User::where($args)->first();
-    //     if ($user != null) {
-    //         if (Hash::check($password, $user->password)) {
-    //             session()->put('user_site', $user);
-    //             return redirect()->route('frontend.home')->with('success', 'dang nhap thanh cong');
-    //         } else {
-    //             return redirect()->route('site.login')->with('error', 'mat khau không dung');
-    //         }
-    //     } else {
-    //         return redirect()->route('site.login')->with('error', 'ten dang nhap hoac email khong ton tai');
-    //     }
-    // }
+
     public function dologin(Request $request)
     {
-        // Xác thực thông tin đăng nhập
-        $validated = $request->validate([
-            'email' => 'required|email',
+        // Xác thực thông tin đầu vào
+        $request->validate([
+            'email' => 'required',
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($validated, $request->has('remember'))) {
-            $user = Auth::user();
+        $email = $request->email;
+        $password = $request->password;
+        $args = [
+            ['status', '=', 2], // Chỉ cho phép người dùng có trạng thái hoạt động
+        ];
 
-            // Kiểm tra role
-            if ($user->roles !== 'customer') {
-                Auth::logout(); // Đăng xuất nếu không phải role customer
-                return redirect()->back()
-                    ->withErrors(['email' => 'Bạn không có quyền truy cập với vai trò hiện tại.']);
-            }
-
-            // Đăng nhập thành công, chuyển hướng
-            return redirect()->route('site.profile');
+        // Kiểm tra xem đầu vào là email hay username
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $args[] = ['email', '=', $email];
+        } else {
+            $args[] = ['username', '=', $email];
         }
 
-        // Nếu xác thực thất bại
-        return redirect()->back()->withErrors(['email' => 'Email hoặc mật khẩu không đúng.']);
+        $user = User::where($args)->first();
+
+        if ($user) {
+            // Kiểm tra mật khẩu
+            if (Hash::check($password, $user->password)) {
+                // Kiểm tra quyền của người dùng
+                if ($user->roles !== 'customer' && $user->status !== 2) {
+                    return redirect()->back()->withErrors(['email' => 'Bạn không có quyền truy cập với vai trò hiện tại.']);
+                }
+
+                // Lưu thông tin vào session
+                Auth::login($user, $request->has('remember'));
+
+                // Chuyển hướng đến trang profile
+                return redirect()->route('site.profile')->with('success', 'Đăng nhập thành công!');
+            } else {
+                // Mật khẩu không đúng
+                return redirect()->route('site.login')->withErrors(['password' => 'Mật khẩu không đúng.']);
+            }
+        } else {
+            // Email hoặc username không tồn tại
+            return redirect()->route('site.login')->withErrors(['email' => 'Tên đăng nhập hoặc email không tồn tại.']);
+        }
     }
 
     // Đăng ký
     public function register()
     {
-        return view('site.register'); // Hiển thị form đăng ký
+        return view('frontend.register'); // Hiển thị form đăng ký
     }
 
     public function doregister(Request $request)
     {
-        // Kiểm tra dữ liệu form
+        // Xác thực dữ liệu
         $validated = $request->validate([
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
             'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|numeric',
+            'address' => 'required|max:255',
+            'gender' => 'required|in:male,female,other',
+            'password' => 'required|min:6|confirmed',
         ]);
 
         // Tạo người dùng mới
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'address' => $validated['address'],
+            'gender' => $validated['gender'],
             'password' => Hash::make($validated['password']),
+            'roles' => 'customer', // Mặc định là customer
+            'status' => 2, // Mặc định là customer
         ]);
 
-        Auth::login($user); // Đăng nhập ngay sau khi tạo tài khoản
+        // Đăng nhập ngay sau khi tạo tài khoản
+        Auth::login($user);
 
-        return redirect()->route('site.profile'); // Redirect tới trang thông tin người dùng
+        return redirect()->route('site.profile')->with('success', 'Đăng ký thành công!');
     }
+
 
     // Đăng xuất
     public function logout()

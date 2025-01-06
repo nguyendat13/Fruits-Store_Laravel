@@ -25,7 +25,8 @@ use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\PostController;
 use App\Http\Controllers\backend\TopicController;
 use App\Http\Controllers\backend\UserController;
-
+use App\Http\Middleware\LoginAdmin;
+use App\Http\Middleware\LoginCustomer;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,8 @@ use App\Http\Controllers\backend\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 // Route trang người dùng (Yêu cầu đăng nhập)
 Route::middleware(['login-customer'])->group(function () {
     Route::get('/public/thong-tin', [ThanhVienController::class, 'profile'])->name('site.profile'); // Trang thông tin người dùng
@@ -66,6 +69,7 @@ Route::get('/public/danh-muc/{slug}', [SanphamController::class, 'category'])->n
 Route::get('/admin/login', [AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'dologin'])->name('admin.dologin');
 Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+
 // ->middleware('login-admin')
 Route::prefix('admin')->middleware('login-admin')->group(function () {
     Route::get("/", [DashboardController::class, "index"])->name("dashboard.index");

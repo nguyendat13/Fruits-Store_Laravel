@@ -1,10 +1,10 @@
 <x-layout-site>
     <div class="bg-gray-100 min-h-screen flex items-center justify-center">
         <div class="w-full max-w-sm bg-white p-6 rounded-lg shadow-lg">
-            @if(Auth::check())
+            {{-- @if(Auth::check())
                 <a href="{{ route('site.profile')}}" class="text-center mb-4">Chào, {{ Auth::user()->name }}! Bạn đã đăng nhập.</a>
 
-            @else
+            @else --}}
             <h2 class="text-2xl font-semibold text-center mb-4">Đăng Nhập</h2>
                 <form action="{{ route('site.login') }}" method="POST">
                     @csrf
@@ -26,7 +26,7 @@
 
                     <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Đăng Nhập</button>
                 </form>
-            @endif
+            {{-- @endif --}}
 
             @if ($errors->any())
                 <div class="bg-red-100 text-red-700 px-4 py-2 rounded mt-4">
