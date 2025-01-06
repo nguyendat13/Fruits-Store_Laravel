@@ -1,7 +1,7 @@
 @if ($category_list != null)
     @foreach ($category_list as $item)
         <li>
-            <a href="{{ route('frontend.product', ['slug' => $item->slug]) }}" 
+            <a href="" 
                class="py-2 px-6 bg-gray-200 rounded-full text-gray-700 hover:text-white hover:bg-orange-500 transition">
                 {{ $item->name }}
             </a>

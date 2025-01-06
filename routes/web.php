@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\AuthController;
 use Illuminate\Support\Facades\Route;
 //Controller trang người dùng
 use App\Http\Controllers\frontend\HomeController as TrangchuController;
@@ -9,9 +10,7 @@ use App\Http\Controllers\frontend\AboutusController as VechungtoiController;
 use App\Http\Controllers\frontend\CartController as GiohangController;
 use App\Http\Controllers\frontend\ProccedController as ThanhtoanController;
 use App\Http\Controllers\frontend\OrderController as DonhangController;
-use App\Http\Controllers\frontend\UserController as TaikhoanController;
-use App\Http\Controllers\frontend\LoginController as DangnhapController;
-use App\Http\Controllers\frontend\RegisterController as DangkyController;
+use App\Http\Controllers\frontend\UserController as ThanhVienController;
 use App\Http\Controllers\frontend\PostsController as BaivietController;
 
 //Controller trang quản trị
@@ -37,24 +36,38 @@ use App\Http\Controllers\backend\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route trang người dùng (Yêu cầu đăng nhập)
+Route::middleware(['login-customer'])->group(function () {
+    Route::get('/public/thong-tin', [ThanhVienController::class, 'profile'])->name('site.profile'); // Trang thông tin người dùng
+    Route::get('/public/dang-xuat', [ThanhVienController::class, 'logout'])->name('site.logout'); // Đăng xuất
+    Route::get('/public/don-hang', [DonhangController::class, 'index'])->name('site.order');
+    Route::get('/public/gio-hang', [GiohangController::class, 'index'])->name('site.cart');
+    Route::get('/public/thanh-toan', [ThanhtoanController::class, 'index'])->name('site.procced');
+});
+// Route đăng nhập và đăng ký
+Route::get('/public/dang-nhap', [ThanhVienController::class, 'login'])->name('site.login');
+Route::post('/public/dang-nhap', [ThanhVienController::class, 'dologin'])->name('site.dologin');
+Route::get('/public/dang-ky', [ThanhVienController::class, 'register'])->name('site.register');
+Route::post('/public/dang-ky', [ThanhVienController::class, 'doregister'])->name('site.doregister');
 
-//Route trang người dùng
+// Các route công cộng không yêu cầu đăng nhập
 Route::get('/public', [TrangchuController::class, 'index'])->name('frontend.home');
 Route::get('/public/san-pham', [SanphamController::class, 'index'])->name('frontend.product');
 Route::get('/public/san-pham/{slug}', [SanphamController::class, 'detail'])->name('frontend.product-detail');
 Route::get('/public/lien-he', [LienheController::class, 'index'])->name('frontend.contact');
 Route::get('/public/ve-chung-toi', [VechungtoiController::class, 'index'])->name('frontend.about_us');
-Route::get('/public/gio-hang', [GiohangController::class, 'index'])->name('frontend.cart');
-Route::get('/public/thanh-toan', [ThanhtoanController::class, 'index'])->name('frontend.procced');
-Route::get('/public/don-hang', [DonhangController::class, 'index'])->name('frontend.order');
-Route::get('/public/tai-khoan', [TaikhoanController::class, 'index'])->name('frontend.user');
-Route::get('/public/dang-nhap', [DangnhapController::class, 'index'])->name('frontend.login');
-Route::get('/public/dang-ky', [DangkyController::class, 'index'])->name('frontend.register');
+
+
 // Route cho bài viết chi tiết
 Route::get('/public/bai-viet/{slug}', [PostController::class, 'show'])->name('frontend.post-detail');
+Route::get('/public/danh-muc/{slug}', [SanphamController::class, 'category'])->name('frontend.category');
 
 
-Route::prefix('admin')->group(function () {
+Route::get('/admin/login', [AuthController::class, 'login'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class, 'dologin'])->name('admin.dologin');
+Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+// ->middleware('login-admin')
+Route::prefix('admin')->middleware('login-admin')->group(function () {
     Route::get("/", [DashboardController::class, "index"])->name("dashboard.index");
     //Product
     Route::prefix('product')->group(function () {

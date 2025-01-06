@@ -1,4 +1,4 @@
-<a href="/san-pham/{{ $product_item->slug }}" class="bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 font-semibold cursor-pointer">
+<a href="{{ route('frontend.product-detail',['slug' => $product_item->slug]) }}" class="bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 font-semibold cursor-pointer">
     <div class="relative">
         <img src="{{ asset('images/product/' . $product_item->thumbnail) }}" alt="{{ $product_item->name }}" class="rounded-t-lg w-full h-48 object-cover">
         <div class="absolute top-2 left-2 bg-yellow-400 text-white text-xs px-3 py-1 rounded">

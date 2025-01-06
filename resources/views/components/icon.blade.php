@@ -28,11 +28,20 @@
             </button>
 
             <!-- Dropdown Menu -->
-            <div class="absolute left-[1px] rigt-[10px] mt-[10px] w-[100px] bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden-dropdown" id="dropdownMenu">
+            <div class="absolute left-[1px] right-[10px] mt-[10px] w-[100px] bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden-dropdown" id="dropdownMenu">
                 <div class="py-1">
+                    <a href="{{ route('site.profile')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tài Khoản</a>
+                    <a href="/public/don-hang" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đơn Hàng</a>
+                    <a href="{{ route('site.logout')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Xuất</a>
+                    {{-- @if (isset($isLoggedIn) && $isLoggedIn)
                     <a href="/public/tai-khoan" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tài Khoản</a>
                     <a href="/public/don-hang" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đơn Hàng</a>
-                    <a href="/public/dang-nhap" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Xuất</a>
+                    <a href="/public/dang-xuat" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Xuất</a>
+                @else
+                    <a href="/public/dang-nhap" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Nhập</a>
+                    <a href="{{ route('site.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Xuất</a>
+                @endif --}}
+                
                 </div>
             </div>
         </div>

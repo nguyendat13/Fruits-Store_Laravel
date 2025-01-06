@@ -8,13 +8,15 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"
         integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    @include("components.alert")
     @vite('resources/css/app.css')
     <title>{{$title ?? 'Admin'}}</title>
     {{$header ?? ""}}
 </head>
-<div class="flex">
-    <header >
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        {{-- Kiểm tra nếu không phải trang đăng nhập thì hiển thị sidebar --}}
+        <header>
+        @if (!Route::is('admin.login'))
         <aside class="w-64 h-full bg-gray-800 text-white min-h-screen p-4">
             <div class="flex items-center mb-8">
                 <img src="https://themewagon.github.io/spike-nuxtjs-free/images/profile/user-3.jpg" alt="Logo" class="w-10 h-10 rounded-full">
@@ -70,7 +72,7 @@
                 </ul>
             </nav>
         </aside>
-        
+        @endif
         <script>
             // Tạo sự kiện click cho tất cả các nút menu
             function toggleSubmenu(menuId, submenuId, iconElement) {
@@ -95,8 +97,12 @@
             toggleSubmenu("post-menu", "post-submenu", document.querySelector("#post-menu span"));
             toggleSubmenu("ui-menu", "ui-submenu", document.querySelector("#ui-menu span"));
         </script>
-    </header>
-    <main>{{$slot}}</main>
+        </header>
+        <main class="flex-1">
+            {{$slot}}
+        </main>
+    </div>
     {{$footer ?? ""}}
-</div>
+</body>
 </html>
+

@@ -4,7 +4,7 @@
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-center">
         @foreach ($products as $product)
             <div class="max-w-sm">
-                <a href="#">
+                <a href="{{ route('frontend.product-detail', ['slug' => $product->slug]) }}">
                     <div class="bg-orange-500 rounded-lg border border-orange-500 overflow-hidden">
                         <img src="{{ asset('images/product/' . $product->thumbnail) }}" class="w-full rounded-t-lg" alt="{{ $product->name }}">
                         <div class="px-4 py-4">

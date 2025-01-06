@@ -39,9 +39,7 @@
             <x-home-list-category/>
         <!-- Sale Products -->
         <x-product-sale :products="$products" />
-
-
-
+        
             {{-- <div class="bg-gray-50 py-10">
                 <div class="container mx-auto py-10 ">
                     <h1 class="text-center text-4xl text-gray-500 font-bold mb-8 mt-[100px]">Rau hữu cơ tươi</h1>

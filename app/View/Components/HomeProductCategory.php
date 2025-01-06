@@ -11,13 +11,15 @@ use Illuminate\View\Component;
 class HomeProductCategory extends Component
 {
     public $category_item;
+    public $selected_category;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($categoryitem)
+    public function __construct($categoryitem, $selectedCategory = null)
     {
         $this->category_item = $categoryitem;
+        $this->selected_category = $selectedCategory;
     }
 
     /**

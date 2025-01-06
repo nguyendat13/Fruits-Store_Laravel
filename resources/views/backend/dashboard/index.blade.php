@@ -11,7 +11,7 @@
                 <h1 class="text-2xl font-semibold text-gray-800">Welcome to Admin Dashboard</h1>
                 <div>
                     <span class="text-gray-600">Hello, Admin!</span>
-                    <a href="logout.html" class="ml-4 text-blue-500 hover:text-blue-700 transition-colors">Đăng xuất</a>
+                    <a href="{{ route('admin.logout') }}" class="ml-4 text-blue-500 hover:text-blue-700 transition-colors">Đăng xuất</a>
                 </div>
             </header>
 

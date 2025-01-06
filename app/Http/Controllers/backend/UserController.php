@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class UserController extends Controller
 {
@@ -92,7 +93,9 @@ class UserController extends Controller
             $user->thumbnail = $filename;
         }
         $user->name = $request->name;
-        $user->password = $request->password;
+        if (!empty($request->password)) {
+            $user->password = bcrypt($request->password); // Mã hóa mật khẩu
+        }
         $user->fullname = $request->fullname ?? '';
         $user->gender = $request->gender;
         $user->email = $request->email;
