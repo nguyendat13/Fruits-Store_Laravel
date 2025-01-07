@@ -1,11 +1,11 @@
 <x-layout-admin>
-    <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center bg-green-100">
         <div class="w-full max-w-sm bg-white p-6 rounded-lg shadow-lg">
             {{-- @if(Auth::check())
             <a href="{{ route('dashboard.index')}}" class="text-center mb-4">Chào, {{ Auth::user()->name }}! Bạn đã đăng nhập.</a>
 
         @else --}}
-            <h2 class="text-2xl font-semibold text-center mb-4">Đăng Nhập</h2>
+            <h2 class="text-2xl font-semibold text-center mb-4 ">Đăng Nhập</h2>
 
             {{-- Form đăng nhập --}}
             <form action="{{ route('admin.dologin') }}" method="POST">
@@ -50,7 +50,7 @@
 
                 {{-- Nút Đăng nhập --}}
                 <button type="submit"
-                    class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
                     aria-label="Đăng Nhập">
                     Đăng Nhập
                 </button>

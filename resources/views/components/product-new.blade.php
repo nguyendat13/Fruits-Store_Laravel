@@ -17,7 +17,7 @@
                         </h4>
                         <p class="text-gray-600 text-sm">{{ $product->description }}</p>
                         <div class="flex justify-between items-center mt-4">
-                            <p class="text-lg font-bold text-gray-800">${{ number_format($product->price, 2) }} / kg</p>
+                            <p class="text-lg font-bold text-gray-800">{{ number_format($product->price_buy * 1000, 0, ',', ',') }}₫ / kg</p>
                             <button class="flex items-center bg-green-100 text-green-700 text-sm font-semibold px-4 py-1 rounded-full border border-green-700 hover:bg-green-200 transition">
                                 <i class="fa fa-shopping-bag mr-1"></i> Thêm vào giỏ hàng
                             </button>

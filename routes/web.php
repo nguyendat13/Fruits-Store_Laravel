@@ -44,9 +44,23 @@ Route::middleware(['login-customer'])->group(function () {
     Route::get('/public/thong-tin', [ThanhVienController::class, 'profile'])->name('site.profile'); // Trang thông tin người dùng
     Route::get('/public/dang-xuat', [ThanhVienController::class, 'logout'])->name('site.logout'); // Đăng xuất
     Route::get('/public/don-hang', [DonhangController::class, 'index'])->name('site.order');
+    Route::get('/orders/cancel/{orderId}', [DonhangController::class, 'cancelOrder'])->name('site.cancel');
+
+
+    //cart
     Route::get('/public/gio-hang', [GiohangController::class, 'index'])->name('site.cart');
-    Route::get('/public/thanh-toan', [ThanhtoanController::class, 'index'])->name('site.procced');
+    Route::get('/addcart/{id}', [GiohangController::class, 'addcart'])->name('site.addcart');
+    Route::post('/updatecart', [GiohangController::class, 'updatecart'])->name('site.updatecart');
+    Route::get('/delcart/{id?}', [GiohangController::class, 'delcart'])->name('site.delcart');
+    Route::get('/cart/count', [GiohangController::class, 'getCartCount'])->name('cart.count');
+    Route::get('/cam-on', [GiohangController::class, 'thanks'])->name('site.thanks');
+    Route::post('/public/thanh-toan', [GiohangController::class, 'checkout'])->name('site.checkout');
+    Route::post('/public/tien-hanh-thanh-toan', [GiohangController::class, 'procced'])->name('site.procced');
 });
+
+
+
+
 // Route đăng nhập và đăng ký
 Route::get('/public/dang-nhap', [ThanhVienController::class, 'login'])->name('site.login');
 Route::post('/public/dang-nhap', [ThanhVienController::class, 'dologin'])->name('site.dologin');
@@ -65,7 +79,7 @@ Route::get('/public/ve-chung-toi', [VechungtoiController::class, 'index'])->name
 Route::get('/public/bai-viet/{slug}', [PostController::class, 'show'])->name('frontend.post-detail');
 Route::get('/public/danh-muc/{slug}', [SanphamController::class, 'category'])->name('frontend.category');
 
-
+//ADMINNNNNN
 Route::get('/admin/login', [AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'dologin'])->name('admin.dologin');
 Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');

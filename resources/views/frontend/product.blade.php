@@ -68,34 +68,11 @@
             </div>
 
             <!-- Danh sách sản phẩm -->
-            <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                @foreach ($products as $product)
-                    <a href="{{ route('frontend.product-detail', $product->slug) }}" class="bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 font-semibold cursor-pointer">
-                        <div class="relative">
-                            <img src="{{ asset('images/product/' . $product->thumbnail) }}" alt="{{ $product->name }}" class="rounded-t-lg w-full h-48 object-cover">
-                            <div class="absolute top-2 left-2 bg-yellow-400 text-white text-xs px-3 py-1 rounded">
-                                @if ($product->category)
-                                    {{ $product->category->name }}
-                                @else
-                                    Không có danh mục
-                                @endif
-                            </div>
-                            
-                        </div>
-                        <div class="p-4 border-t border-yellow-400 ">
-                            <h4 class="text-lg font-semibold mb-2">{{ $product->name }}</h4>
-                            <p class="text-gray-500 text-sm mb-4">{{ $product->description }}</p>
-                            <div class="flex justify-between items-center">
-                                <p class="text-gray-800 font-bold">{{ number_format($product->price) }} VND</p>
-                                <button class="flex items-center bg-green-100 text-green-700 text-sm font-semibold px-4 py-1 rounded-full border border-green-700 hover:bg-green-200 transition">
-                                    <i class="fa fa-shopping-bag mr-1"></i> Thêm vào giỏ hàng
-                                </button>
-                            </div>
-                        </div>
-                    </a>
+            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                @foreach ($products as $productitem)
+                    <x-product-card :productitem="$productitem" />
                 @endforeach
             </div>
-
             <!-- Pagination -->
             <div class="w-full">
                 <div class="pagination flex justify-center mt-5 space-x-2">

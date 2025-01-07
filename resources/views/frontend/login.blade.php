@@ -1,5 +1,5 @@
 <x-layout-site>
-    <div class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-green-100 min-h-screen flex items-center justify-center">
         <div class="w-full max-w-sm bg-white p-6 rounded-lg shadow-lg">
             {{-- @if(Auth::check())
                 <a href="{{ route('site.profile')}}" class="text-center mb-4">Chào, {{ Auth::user()->name }}! Bạn đã đăng nhập.</a>
@@ -24,7 +24,7 @@
                     </div>
                     <p class="mt-4 mb-4 text-center text-sm">Chưa có tài khoản? <a href="{{ route('site.register') }}" class="text-blue-500 hover:underline">Đăng ký ngay</a></p>
 
-                    <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Đăng Nhập</button>
+                    <button type="submit" class="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">Đăng Nhập</button>
                 </form>
             {{-- @endif --}}
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -60,6 +61,9 @@ class ProductController extends Controller
             ->orderBy('name', 'asc') // Sắp xếp theo tên danh mục
             ->get();
 
+
+
+
         return view('frontend.product', compact('products', 'categories'));
     }
 
@@ -74,6 +78,7 @@ class ProductController extends Controller
             ->where('id', '!=', $product->id)
             ->take(4)
             ->get();
+
 
         // Truyền dữ liệu vào view
         return view('frontend.product-detail', compact('product', 'relatedProducts'));

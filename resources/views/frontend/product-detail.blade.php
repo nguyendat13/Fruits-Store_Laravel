@@ -17,9 +17,10 @@
                     <h2 class="text-3xl text-gray-600 font-bold mb-4">{{ $product->name }}</h2>
                     <p class="text-2xl font-semibold mb-4">Giá: {{ number_format($product->price, 0, ',', '.') }}₫</p>
                     <p class="text-gray-600 mb-6">{{ $product->description }}</p>
-                    <button class="flex items-center bg-green-100 text-green-700 text-sm font-semibold px-4 py-1 rounded-full border border-green-700 hover:bg-green-200 transition">
+                    <a href="{{ route('site.addcart', ['id' => $product->id]) }}"
+                        class="relative w-[200px] flex items-center bg-green-100 text-green-700 text-sm font-semibold px-4 py-1 rounded-full border border-green-700 hover:bg-green-200 transition">
                         <i class="fa fa-shopping-bag mr-1"></i> Thêm vào giỏ hàng
-                    </button>
+                    </a>
                 </div>
             </div>
         </section>

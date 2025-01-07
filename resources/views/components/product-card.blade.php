@@ -1,21 +1,30 @@
 <a href="{{ route('frontend.product-detail',['slug' => $product_item->slug]) }}" class="bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 font-semibold cursor-pointer">
     <div class="relative">
         <img src="{{ asset('images/product/' . $product_item->thumbnail) }}" alt="{{ $product_item->name }}" class="rounded-t-lg w-full h-48 object-cover">
+    
+        <!-- Nhãn Danh Mục -->
         <div class="absolute top-2 left-2 bg-yellow-400 text-white text-xs px-3 py-1 rounded">
             {{ $product_item->category->name }}
         </div>
+        
+        <!-- Nhãn Sản Phẩm Mới -->
+        @if($is_new)
+        <div class="absolute text-white bg-red-500 text-xs px-3 py-1 rounded-[10px] h-[30px] w-[50px]">Mới</div>
+        @endif
     </div>
     <div class="p-4 border-t border-yellow-400">
         <h4 class="text-lg font-semibold mb-2">{{ $product_item->name }}</h4>
         <p class="text-gray-500 text-sm mb-4">{{ $product_item->description }}</p>
-        <div class="flex justify-between items-center">
-            <p class="text-lg font-bold text-gray-800">${{ number_format($product_item->price, 2) }} / kg</p>
-            <button class="flex items-center bg-green-100 text-green-700 text-sm font-semibold px-4 py-1 rounded-full border border-green-700 hover:bg-green-200 transition">
-                <i class="fa fa-shopping-bag mr-1"></i> Thêm vào giỏ hàng
-            </button>
+        <div class="">
+            <p class="text-lg font-bold text-gray-800 ">{{ number_format($product_item->price_buy * 1000, 0, ',', ',') }}₫ / kg</p>
+            <a href="{{ route('site.addcart', ['id' => $product_item->id]) }}"
+                class="flex items-center bg-green-100 text-green-700 text-sm font-semibold px-4 py-1 rounded-full border border-green-700 hover:bg-green-200 transition mt-[10px] w-[200px]">
+                <i class="fa fa-shopping-bag mr-1"></i>Thêm vào giỏ hàng
+            </a>
         </div>
     </div>
 </a>
+
 
 {{-- 
 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">

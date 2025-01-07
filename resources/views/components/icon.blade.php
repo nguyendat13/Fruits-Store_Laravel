@@ -33,15 +33,6 @@
                     <a href="{{ route('site.profile')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tài Khoản</a>
                     <a href="/public/don-hang" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đơn Hàng</a>
                     <a href="{{ route('site.logout')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Xuất</a>
-                    {{-- @if (isset($isLoggedIn) && $isLoggedIn)
-                    <a href="/public/tai-khoan" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tài Khoản</a>
-                    <a href="/public/don-hang" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đơn Hàng</a>
-                    <a href="/public/dang-xuat" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Xuất</a>
-                @else
-                    <a href="/public/dang-nhap" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Nhập</a>
-                    <a href="{{ route('site.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng Xuất</a>
-                @endif --}}
-                
                 </div>
             </div>
         </div>
@@ -51,8 +42,10 @@
 
         <!-- Cart Button -->
         <button>
-            <a href="/public/gio-hang" class="relative fa-solid fa-cart-shopping hover:text-black">
-                <span class="absolute top-[-10px] right-[-10px] bg-red-500 text-white text-xs rounded-full px-1">2</span>
+            <a href="{{ route('site.cart') }}" class="relative fa-solid fa-cart-shopping hover:text-black">
+                <span class="absolute top-[-10px] right-[-10px] bg-red-500 text-white text-xs rounded-full px-1" id="cart-count">
+                    {{ session('cart_count', 0) }}  
+                </span>
             </a>
         </button>
 
@@ -61,6 +54,19 @@
     </div>
 
     <script>
+           // Hàm cập nhật số lượng giỏ hàng trong biểu tượng giỏ hàng
+    function updateCartCount() {
+        fetch("{{ route('cart.count') }}")
+            .then(response => response.json())
+            .then(data => {
+                const cartCountElement = document.querySelector('#cart-count');
+                cartCountElement.textContent = data.count; // Cập nhật số lượng giỏ hàng
+            })
+            .catch(error => console.error("Error fetching cart count:", error));
+    }
+
+    // Gọi hàm để cập nhật số lượng giỏ hàng khi trang tải
+    updateCartCount();
         document.getElementById('searchIcon').addEventListener('click', function() {
             const searchInput = document.getElementById('searchInput');
             // Kiểm tra xem ô tìm kiếm có đang ẩn hay không

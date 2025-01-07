@@ -100,7 +100,7 @@ class UserController extends Controller
         // Đăng nhập ngay sau khi tạo tài khoản
         Auth::login($user);
 
-        return redirect()->route('site.profile')->with('success', 'Đăng ký thành công!');
+        return redirect()->route('site.login')->with('success', 'Đăng ký thành công!');
     }
 
 
