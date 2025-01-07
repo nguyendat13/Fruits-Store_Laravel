@@ -15,7 +15,7 @@
                 <!-- Product Details -->
                 <div class="w-full md:w-1/2 md:ml-8 mt-6 md:mt-0">
                     <h2 class="text-3xl text-gray-600 font-bold mb-4">{{ $product->name }}</h2>
-                    <p class="text-2xl font-semibold mb-4">Giá: {{ number_format($product->price, 0, ',', '.') }}₫</p>
+                    <p class="text-2xl font-semibold mb-4">Giá: {{ number_format($product->price_buy *1000, 0, ',', '.') }}₫</p>
                     <p class="text-gray-600 mb-6">{{ $product->description }}</p>
                     <a href="{{ route('site.addcart', ['id' => $product->id]) }}"
                         class="relative w-[200px] flex items-center bg-green-100 text-green-700 text-sm font-semibold px-4 py-1 rounded-full border border-green-700 hover:bg-green-200 transition">
@@ -42,7 +42,7 @@
                         <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 text-center">
                             <img src="{{ asset('images/product/' . $relatedProduct->thumbnail) }}" alt="{{ $relatedProduct->name }}" class="h-40 w-full object-cover rounded-md mb-4">
                             <h4 class="font-semibold text-lg mb-2">{{ $relatedProduct->name }}</h4>
-                            <p class="text-blue-600 font-bold mb-2">{{ number_format($relatedProduct->price, 0, ',', '.') }}₫</p>
+                            <p class="text-blue-600 font-bold mb-2">{{ number_format($relatedProduct->price_buy *1000, 0, ',', '.') }}₫</p>
                             <a href="{{ route('frontend.product-detail', $relatedProduct->slug) }}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300">Xem chi tiết</a>
                         </div>
                     @endforeach

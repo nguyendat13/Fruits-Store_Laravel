@@ -22,49 +22,37 @@
                 <form method="GET" action="{{ route('frontend.product') }}" class="flex space-x-4">
                     <label class="flex items-center space-x-2">
                         <span class="font-semibold">Danh mục:</span>
-                        <select name="category_id" class="border border-gray-300 rounded p-2">
+                        <select name="category_id" class="border border-gray-300 rounded p-2" onchange="this.form.submit()">
                             <option value="all">Tất cả</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
                     </label>
-
-                    <label class="flex items-center space-x-2">
-                        <span class="font-semibold">Thương hiệu:</span>
-                        <select name="brand" class="border border-gray-300 rounded p-2">
-                            <option value="all">Tất cả</option>
-                            <option value="Việt Nam">Việt Nam</option>
-                            <option value="Mỹ">Mỹ</option>
-                            <option value="Pháp">Pháp</option>
-                            <option value="Hàn Quốc">Hàn Quốc</option>
-                        </select>
-                    </label>
-
-                    <!-- Sắp xếp sản phẩm -->
+                
                     <label class="flex items-center space-x-2">
                         <span class="font-semibold">Sắp xếp:</span>
-                        <select name="sort_by" class="border border-gray-300 rounded p-2">
-                            <option value="price-asc">Giá (Thấp đến Cao)</option>
-                            <option value="price-desc">Giá (Cao đến Thấp)</option>
-                            <option value="name-asc">Tên (A-Z)</option>
+                        <select name="sort_by" class="border border-gray-300 rounded p-2" onchange="this.form.submit()">
+                            <option value="price-asc" {{ request('sort_by') == 'price-asc' ? 'selected' : '' }}>Giá (Thấp đến Cao)</option>
+                            <option value="price-desc" {{ request('sort_by') == 'price-desc' ? 'selected' : '' }}>Giá (Cao đến Thấp)</option>
+                            <option value="name-asc" {{ request('sort_by') == 'name-asc' ? 'selected' : '' }}>Tên (A-Z)</option>
                         </select>
                     </label>
-
-                    <!-- Chọn giá theo khoảng cố định -->
+                
                     <label class="flex items-center space-x-2">
                         <span class="font-semibold">Giá:</span>
-                        <select name="price" class="border border-gray-300 rounded p-2">
-                            <option value="all">Tất cả</option>
-                            <option value="0-100000">Dưới 100,000 VND</option>
-                            <option value="100000-500000">100,000 VND - 500,000 VND</option>
-                            <option value="500000-1000000">500,000 VND - 1,000,000 VND</option>
-                            <option value="1000000">Trên 1,000,000 VND</option>
+                        <select name="price" class="border border-gray-300 rounded p-2" onchange="this.form.submit()">
+                            <option value="all" {{ request('price') == 'all' ? 'selected' : '' }}>Tất cả</option>
+                            <option value="0-100000" {{ request('price') == '0-100000' ? 'selected' : '' }}>Dưới 100,000 VND</option>
+                            <option value="100000-500000" {{ request('price') == '100000-500000' ? 'selected' : '' }}>100,000 VND - 500,000 VND</option>
+                            <option value="500000-1000000" {{ request('price') == '500000-1000000' ? 'selected' : '' }}>500,000 VND - 1,000,000 VND</option>
+                            <option value="1000000" {{ request('price') == '1000000' ? 'selected' : '' }}>Trên 1,000,000 VND</option>
                         </select>
                     </label>
-
-                    <button type="submit" class="bg-gray-200 px-4 py-2 rounded">Lọc</button>
                 </form>
+                
             </div>
 
             <!-- Danh sách sản phẩm -->
