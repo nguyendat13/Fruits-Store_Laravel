@@ -1,13 +1,14 @@
 @if ($category_list != null)
     @foreach ($category_list as $item)
         <li>
-            <a href="" 
+            <a href="{{ route('site.product-category', ['category_id' => $item->id]) }}" 
                class="py-2 px-6 bg-gray-200 rounded-full text-gray-700 hover:text-white hover:bg-orange-500 transition">
                 {{ $item->name }}
             </a>
         </li>
     @endforeach
 @endif
+
 
 {{-- <li>
     <a href="#tab-1" class="py-2 px-6 bg-gray-200 rounded-full text-gray-700 hover:text-white hover:bg-orange-500 transition">Tất cả sản phẩm</a>

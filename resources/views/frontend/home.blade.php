@@ -36,7 +36,7 @@
         </div>
     
         <!-- Product Categories -->
-            <x-home-list-category/>
+        <x-home-list-category />
         <!-- Sale Products -->
         <x-product-sale :products="$products" />
         

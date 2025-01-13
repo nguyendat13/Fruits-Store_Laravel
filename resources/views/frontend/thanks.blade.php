@@ -9,7 +9,7 @@
         <p class="text-lg text-gray-700 mb-8">Đơn hàng của bạn đã được đặt thành công. Chúng tôi sẽ xử lý và gửi thông tin cho bạn trong thời gian sớm nhất.</p>
         
         <div class="m-5">
-            <a href="{{ route('frontend.home') }}" class="m-[10px] bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition duration-300">
+            <a href="{{ route('site.home') }}" class="m-[10px] bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition duration-300">
                 Quay lại Trang Chủ
             </a>
             <a href="{{ route('site.order') }}" class="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition duration-300">

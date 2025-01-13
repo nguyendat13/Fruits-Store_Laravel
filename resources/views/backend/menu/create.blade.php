@@ -60,6 +60,8 @@
                         <select name="type" id="type" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
                             <option value="page" {{ old('type') == 'page' ? 'selected' : '' }}>Page</option>
                             <option value="category" {{ old('type') == 'category' ? 'selected' : '' }}>Category</option>
+                            <option value="brand" {{ old('type') == 'brand' ? 'selected' : '' }}>Brand</option>
+
                         </select>
                         @if ($errors->has('type'))
                             <div class="text-red-500 text-sm">{{ $errors->first('type') }}</div>

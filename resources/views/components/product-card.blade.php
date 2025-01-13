@@ -1,4 +1,4 @@
-<a href="{{ route('frontend.product-detail',['slug' => $product_item->slug]) }}" class="bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 font-semibold cursor-pointer">
+<a href="{{ route('frontend.products.product-detail',['slug' => $product_item->slug]) }}" class="bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 font-semibold cursor-pointer">
     <div class="relative">
         <img src="{{ asset('images/product/' . $product_item->thumbnail) }}" alt="{{ $product_item->name }}" class="rounded-t-lg w-full h-48 object-cover">
     
@@ -28,7 +28,7 @@
 
 {{-- 
 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-<a href="{{ route('frontend.product-detail',['slug' => $product->slug]) }}" 
+<a href="{{ route('frontend.products.product-detail',['slug' => $product->slug]) }}" 
     class="bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 font-semibold cursor-pointer">
      <div class="relative">
          <img src="https://bizweb.dktcdn.net/thumb/large/100/514/629/products/bo-booth.jpg?v=1713170772577" 

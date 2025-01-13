@@ -6,7 +6,7 @@
         <div class="md:col-span-3">
             <h2 class="text-2xl font-semibold mb-2">{{ $postitem->title }}</h2>
             <p class="text-lg text-gray-700 mb-4">{{ $postitem->description }}</p>
-            <a href="{{ route('frontend.post-detail', ['slug' => $postitem->slug]) }}" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200">
+            <a href="{{ route('frontend.post.post-detail', ['slug' => $postitem->slug]) }}" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200">
                 <strong>Đọc thêm</strong>
             </a>
         </div>

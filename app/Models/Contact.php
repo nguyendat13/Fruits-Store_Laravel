@@ -9,4 +9,16 @@ class Contact extends Model
 {
     use SoftDeletes;
     protected $table = 'contact';
+
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'title',
+        'content',
+        'reply_id',
+        'created_by',
+        'updated_by',
+        'status',
+    ];
 }

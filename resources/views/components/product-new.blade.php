@@ -4,7 +4,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach ($products as $product)
                 <div class="border border-lime-500 rounded shadow-md hover:shadow-2xl relative shadow-lg w-80 flex-none">
-                    <a href="{{ route('frontend.product-detail', ['slug' => $product->slug]) }}">
+                    <a href="{{ route('frontend.products.product-detail', ['slug' => $product->slug]) }}">
                         <div class="overflow-hidden rounded-t">
                             <img src="{{ asset('images/product/' . $product->thumbnail) }}" class="w-full h-48 object-cover" alt="{{ $product->name }}">
                         </div>
@@ -13,7 +13,7 @@
                     </a>
                     <div class="p-4 bg-white rounded-b">
                         <h4 class="text-lg font-semibold">
-                            <a href="{{ route('frontend.product-detail', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
+                            <a href="{{ route('frontend.products.product-detail', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
                         </h4>
                         <p class="text-gray-600 text-sm">{{ $product->description }}</p>
                         <div class="flex justify-between items-center mt-4">

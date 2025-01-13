@@ -26,7 +26,7 @@ class HomeListCategory extends Component
             ['status', '=', 1],
             ['parent_id', '=', 0],
         ];
-        $categorys = Category::where($args)->orderBy('sort_order', 'DESC')->get();
-        return view('components.home-list-category', compact('categorys'));
+        $categories = Category::where($args)->orderBy('sort_order', 'DESC')->get();
+        return view('components.home-list-category', compact('categories'));
     }
 }

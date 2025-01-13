@@ -11,7 +11,7 @@ use App\Http\Controllers\frontend\CartController as GiohangController;
 use App\Http\Controllers\frontend\ProccedController as ThanhtoanController;
 use App\Http\Controllers\frontend\OrderController as DonhangController;
 use App\Http\Controllers\frontend\UserController as ThanhVienController;
-use App\Http\Controllers\frontend\PostsController as BaivietController;
+use App\Http\Controllers\frontend\PostController as BaivietController;
 
 //Controller trang quản trị
 use App\Http\Controllers\backend\DashboardController;
@@ -25,8 +25,11 @@ use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\PostController;
 use App\Http\Controllers\backend\TopicController;
 use App\Http\Controllers\backend\UserController;
+use App\Http\Controllers\HomeListCategoryController;
 use App\Http\Middleware\LoginAdmin;
 use App\Http\Middleware\LoginCustomer;
+use App\View\Components\HomeListCategory;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,18 +71,34 @@ Route::get('/public/dang-ky', [ThanhVienController::class, 'register'])->name('s
 Route::post('/public/dang-ky', [ThanhVienController::class, 'doregister'])->name('site.doregister');
 
 // Các route công cộng không yêu cầu đăng nhập
-Route::get('/public', [TrangchuController::class, 'index'])->name('frontend.home');
-Route::get('/public/san-pham', [SanphamController::class, 'index'])->name('frontend.product');
-Route::get('/public/san-pham/{slug}', [SanphamController::class, 'detail'])->name('frontend.product-detail');
-Route::get('/public/lien-he', [LienheController::class, 'index'])->name('frontend.contact');
+Route::get('/public', [TrangchuController::class, 'index'])->name('site.home');
+// Route::get('/public', [HomeListCategoryController::class, 'index'])->name('components.home-list-category');
+//trang san pham
+Route::get('/public/san-pham', [SanphamController::class, 'index'])->name('frontend.products.product');
+Route::get('/public/san-pham/{slug}', [SanphamController::class, 'detail'])->name('frontend.products.product-detail');
+Route::get('/search', [SanphamController::class, 'search'])->name('frontend.products.search');
+
+//trang lien he
+Route::get('/public/lien-he', [LienheController::class, 'index'])->name('frontend.contact.contact');
+Route::post('/public/da-gui-tin-nhan', [LienheController::class, 'sendMessage'])->name('frontend.contact.send');
+
+//trang chung toi
 Route::get('/public/ve-chung-toi', [VechungtoiController::class, 'index'])->name('frontend.about_us');
 
+//trang bai viet
+Route::get('/public/tat-ca-bai-viet', [BaivietController::class, 'index'])->name('frontend.post.post');
+Route::get('/public/bai-viet/{slug}', [BaivietController::class, 'show'])->name('frontend.post.post-detail');
+Route::get('/public/tat-ca-bai-viet/{topicSlug}', [BaivietController::class, 'indexByTopic'])->name('frontend.post.post-topic');
 
-// Route cho bài viết chi tiết
-Route::get('/public/bai-viet/{slug}', [PostController::class, 'show'])->name('frontend.post-detail');
-Route::get('/public/danh-muc/{slug}', [SanphamController::class, 'category'])->name('frontend.category');
+//trang danh muc
+Route::get('/public/danh-muc', [SanphamController::class, 'category'])->name('site.product-category'); // Danh sách tất cả danh mục
+Route::get('/public/danh-muc/{slug}', [SanphamController::class, 'showCategory'])->name('site-category'); // Sản phẩm theo danh mục
 
-//ADMINNNNNN
+//trang thuong hieu
+Route::get('/public/thuong-hieu', [SanphamController::class, 'brand'])->name('site.product-brand');
+Route::get('/public/thuong-hieu/{slug}', [SanphamController::class, 'showBrand'])->name('site.brand');
+
+//dang nhap,dang xuat ADMINNNNNN
 Route::get('/admin/login', [AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'dologin'])->name('admin.dologin');
 Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
