@@ -1,22 +1,12 @@
-<div>
-    <div class="navbar" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            @foreach ($list_menu as $row_menu)
-                <li class="nav-item">
-                    <x-sub-menu-footer :rowmenu="$row_menu" />
-                </li>
-            @endforeach
-        </ul>
-    </div>
-</div>
-
-{{-- <div class="footer-menu">
+<div class="footer-menu grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 text-gray-300">
     @foreach ($menus as $menu)
         <div>
-            <h4 class="text-white font-bold text-lg">{{ $menu->name }}</h4>
-            @if ($menu->children && $menu->children->count())
-                <x-sub-menu-footer :menuitem="$menu" />
-            @endif
+            <!-- Tiêu đề danh mục -->
+            <h4 class="text-lg font-semibold text-white mb-4 border-b border-gray-600 pb-2">
+                {{ $menu->name }}
+            </h4>
+            <!-- Submenu -->
+            <x-sub-menu-footer :rowmenu="$menu->id" />
         </div>
     @endforeach
-</div> --}}
+</div>

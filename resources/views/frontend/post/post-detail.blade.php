@@ -4,7 +4,7 @@
         <div class="mb-6">
             <img src="{{ asset('images/post/' . $post->thumbnail) }}" alt="{{ $post->title }}" class="w-[500px] h-auto border border-gray-300 rounded-md">
         </div>
-        <div class="text-lg text-gray-700 mb-6">
+        <div class="text-lg text-gray-700 mb-6 ">
             {!! $post->content !!}
         </div>
 

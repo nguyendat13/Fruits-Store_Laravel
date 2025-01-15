@@ -9,13 +9,15 @@ use Illuminate\View\Component;
 
 class SubMenuFooter extends Component
 {
-    public $row_menu = null;
+    public $subMenus;
     /**
      * Create a new component instance.
      */
     public function __construct($rowmenu)
     {
-        $this->row_menu = $rowmenu;
+        $this->subMenus = Menu::where('parent_id', $rowmenu)
+            ->orderBy('sort_order')
+            ->get();
     }
 
     /**
@@ -23,15 +25,7 @@ class SubMenuFooter extends Component
      */
     public function render(): View|Closure|string
     {
-        $menu = $this->row_menu;
-        $args_footermenu_sub = [
-            ['status', '=', 1],
-            ['position', '=', 'footermenu'],
-            ['parent_id', '=', $menu->id]
-        ];
-        $list_menu_sub = Menu::where($args_footermenu_sub)
-            ->orderBy('sort_order', 'DESC')
-            ->get();
-        return view('components.sub-menu-footer', compact('menu', 'list_menu_sub'));
+
+        return view('components.sub-menu-footer', ['subMenus' => $this->subMenus]);
     }
 }

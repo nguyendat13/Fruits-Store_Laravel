@@ -27,7 +27,7 @@ class PostController extends Controller
 
         $posts = $query->get();
         // Lấy tất cả các chủ đề
-        $topics = Topic::all();
+        $topics = Topic::where('status', '=', 1)->get();
         $title = $topicSlug && isset($topic) ? $topic->name : 'Tất cả bài viết';
 
         // Trả về view 'posts.index' và truyền dữ liệu bài viết và chủ đề

@@ -19,7 +19,7 @@
     </div>
     
     <!-- Slider nằm bên phải -->
-    <div class="relative bg-red-500 rounded-full shadow-lg" style="bottom:350px;left:750px;width: 450px;">
+    <div class="relative bg-red-500 rounded-full shadow-lg  w-[450px] bottom-[330px] left-[1000px]">
         <!-- Carousel Slides -->
         <div class="overflow-hidden relative">
             <div id="carousel" class="flex transition-transform duration-500 ease-in-out" style="width: 100%; position: relative;">

@@ -9,12 +9,17 @@ use Illuminate\View\Component;
 
 class MenuFooter extends Component
 {
+    public $menus;
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->menus = Menu::where('position', 'footermenu')
+            ->where('parent_id', 0)
+            ->orderBy('sort_order')
+            ->get();
     }
 
     /**
@@ -22,18 +27,6 @@ class MenuFooter extends Component
      */
     public function render(): View|Closure|string
     {
-        $args = [
-            ['status', '=', 1],
-            ['position', '=', 'footermenu'],
-            ['parent_id', '=', 0],
-        ];
-        $list_menu = Menu::where($args)->orderBy('sort_order', 'DESC')->get();
-
-        // Debug dữ liệu
-        if ($list_menu->isEmpty()) {
-            dd("No menus found with args: ", $args);
-        }
-
-        return view('components.menu-footer', compact('list_menu'));
+        return view('components.menu-footer', ['menus' => $this->menus]);
     }
 }

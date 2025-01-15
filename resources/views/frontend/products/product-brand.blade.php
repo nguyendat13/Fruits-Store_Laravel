@@ -56,10 +56,10 @@
                                 <span class="font-semibold">Giá:</span>
                                 <select name="price_buy" class="border border-gray-300 rounded p-2" onchange="this.form.submit()">
                                     <option value="all" {{ request('price_buy') == 'all' ? 'selected' : '' }}>Tất cả</option>
-                                    <option value="0-100000" {{ request('price_buy') == '0-100000' ? 'selected' : '' }}>Dưới 100,000 VND</option>
-                                    <option value="100000-500000" {{ request('price_buy') == '100000-500000' ? 'selected' : '' }}>100,000 - 500,000 VND</option>
-                                    <option value="500000-1000000" {{ request('price_buy') == '500000-1000000' ? 'selected' : '' }}>500,000 - 1,000,000 VND</option>
-                                    <option value="1000000" {{ request('price_buy') == '1000000' ? 'selected' : '' }}>Trên 1,000,000 VND</option>
+                                    <option value="0-100" {{ request('price_buy') == '0-100' ? 'selected' : '' }}>Dưới 100,000 VND</option>
+                                    <option value="100-500" {{ request('price_buy') == '100-500' ? 'selected' : '' }}>100,000 VND - 500,000 VND</option>
+                                    <option value="500-1000" {{ request('price_buy') == '500-10000' ? 'selected' : '' }}>500,000 VND - 1,000,000 VND</option>
+                                    <option value="1000" {{ request('price_buy') == '1000' ? 'selected' : '' }}>Trên 1,000,000 VND</option>
                                 </select>
                             </label>
                         

@@ -36,14 +36,15 @@ class ProductController extends Controller
             $query->where('brand', $brand);
         }
         // Lọc theo giá
-        if ($priceRange && $priceRange != 'all') {
-            $priceRange = explode('-', $priceRange);
-            if (count($priceRange) > 1) {
+        if ($request->input('price_buy') && $request->input('price_buy') != 'all') {
+            $priceRange = explode('-', $request->input('price_buy'));
+            if (count($priceRange) == 2) {
                 $query->whereBetween('price_buy', [$priceRange[0], $priceRange[1]]);
-            } else {
+            } elseif (count($priceRange) == 1) {
                 $query->where('price_buy', '>=', $priceRange[0]);
             }
         }
+
 
         // Sắp xếp sản phẩm
         if ($sortBy) {
@@ -59,13 +60,14 @@ class ProductController extends Controller
 
         // Lấy các sản phẩm đã lọc và phân trang
         $products = $query->paginate(12)->appends(request()->query());
-
+        // Kiểm tra nếu không có sản phẩm
+        $noProducts = $products->isEmpty();
 
         $categories = Category::where('status', 1)
             ->where('parent_id', 1) // Điều kiện parent_id = 0
             ->orderBy('name', 'asc') // Sắp xếp theo tên danh mục
             ->get();
-        return view('frontend.products.product', compact('products', 'categories', 'viewMode'));
+        return view('frontend.products.product', compact('products', 'categories', 'viewMode', 'noProducts'));
     }
 
     public function search(Request $request)

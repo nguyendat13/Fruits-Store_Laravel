@@ -8,10 +8,10 @@ use App\Http\Controllers\frontend\ProductController as SanphamController;
 use App\Http\Controllers\frontend\ContactController as LienheController;
 use App\Http\Controllers\frontend\AboutusController as VechungtoiController;
 use App\Http\Controllers\frontend\CartController as GiohangController;
-use App\Http\Controllers\frontend\ProccedController as ThanhtoanController;
 use App\Http\Controllers\frontend\OrderController as DonhangController;
 use App\Http\Controllers\frontend\UserController as ThanhVienController;
 use App\Http\Controllers\frontend\PostController as BaivietController;
+use App\Http\Controllers\frontend\PolicyController as ChinhsachController;
 
 //Controller trang quản trị
 use App\Http\Controllers\backend\DashboardController;
@@ -97,6 +97,12 @@ Route::get('/public/danh-muc/{slug}', [SanphamController::class, 'showCategory']
 //trang thuong hieu
 Route::get('/public/thuong-hieu', [SanphamController::class, 'brand'])->name('site.product-brand');
 Route::get('/public/thuong-hieu/{slug}', [SanphamController::class, 'showBrand'])->name('site.brand');
+
+//trang chinh sach
+Route::get('/public/chinh-sach/chinh-sach-van-chuyen', [ChinhsachController::class, 'shippingPolicy'])->name('site.shipping-policy');
+Route::get('/public/chinh-sach/chinh-sach-thanh-toan', [ChinhsachController::class, 'paymentPolicy'])->name('site.payment-policy');
+Route::get('/public/chinh-sach/chinh-sach-doi-tra', [ChinhsachController::class, 'returnPolicy'])->name('site.return-policy');
+Route::get('/public/chinh-sach/chinh-sach-ho-tro', [ChinhsachController::class, 'supportPolicy'])->name('site.support-policy');
 
 //dang nhap,dang xuat ADMINNNNNN
 Route::get('/admin/login', [AuthController::class, 'login'])->name('admin.login');

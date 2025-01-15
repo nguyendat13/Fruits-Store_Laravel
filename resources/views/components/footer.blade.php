@@ -1,4 +1,32 @@
+
 <footer class="bg-gray-900 text-white py-10">
+    <div class="container mx-auto space-y-8">
+        <!-- Menu Footer -->
+        <x-menu-footer />
+         <!-- Phần Liên hệ với Mạng Xã Hội -->
+         <div class="mt-8 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-lime-500 text-xl" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-lime-500 text-xl" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-lime-500 text-xl" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-lime-500 text-xl" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+        <!-- Dòng bản quyền -->
+        <div class="border-t border-gray-700 pt-4 text-center text-sm text-gray-400">
+            © 2024 Công ty của bạn. Bảo lưu mọi quyền. | Thiết kế bởi 
+            <a href="#" class="text-lime-500 hover:underline">Phat Dat</a>
+        </div>
+    </div>
+</footer>
+
+{{-- <footer class="bg-gray-900 text-white py-10">
     <div class="container mx-auto">
         <!-- Bố cục chính -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -50,9 +78,6 @@
             </div>
         </div>
         <x-menu-footer/>
-        <!-- Dòng bản quyền -->
-        <div class="border-t border-gray-700 pt-4 text-center text-sm text-gray-500">
-            © 2024 Công ty của bạn. Bảo lưu mọi quyền. | Thiết kế bởi <a href="#" class="text-lime-500 hover:underline">Fruitables</a>
-        </div>
+       
     </div>
-</footer>
+</footer> --}}
