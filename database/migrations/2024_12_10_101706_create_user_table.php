@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('roles', ['admin', 'customer'])->default('customer');
             $table->unsignedInteger('created_by')->default(1);  // Giá trị mặc định cho created_by
             $table->unsignedInteger('updated_by')->nullable();
-            $table->unsignedTinyInteger('status')->default(1);
+            $table->unsignedTinyInteger('status')->default(2);  // Giá trị mặc định cho status
             $table->softDeletes();  // Sử dụng softDeletes() thay vì softDeletes('delete_at')
             $table->timestamps();
             $table->rememberToken();  // Thêm cột remember_token

@@ -39,7 +39,7 @@ class AuthController extends Controller
             return redirect()->route('dashboard.index')->with('success', 'Đăng nhập thành công.');
         }
 
-        return redirect()->route('admin.login')->with('error', 'Thông tin không chính xác.');
+        return redirect()->route('admin.login')->with('error', 'Email hoặc Mật khẩu không chính xác.');
     }
 
     // Xử lý đăng xuất

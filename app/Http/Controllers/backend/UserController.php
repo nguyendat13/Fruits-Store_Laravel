@@ -110,6 +110,7 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'Thêm người dùng thành công!');
     }
 
+
     /**
      * Display the specified resource.
      *

@@ -69,7 +69,6 @@ class ProductController extends Controller
             ->get();
         return view('frontend.products.product', compact('products', 'categories', 'viewMode', 'noProducts'));
     }
-
     public function search(Request $request)
     {
         // Lấy từ khóa tìm kiếm

@@ -29,7 +29,7 @@
                         <tr class="border-b">
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->id }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">
-                                <img src="{{ $item->thumbnail }}" alt="{{ $item->name }}" class="rounded-md" width="50">
+                                <img src="{{ asset('storage/images/product/' . $item->thumbnail) }}" alt="{{ $item->name }}" class="rounded-md" width="50">
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->category->name ?? 'Không có danh mục' }}</td>

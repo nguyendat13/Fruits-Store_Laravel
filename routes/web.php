@@ -45,9 +45,13 @@ use App\View\Components\HomeListCategory;
 // Route trang người dùng (Yêu cầu đăng nhập)
 Route::middleware(['login-customer'])->group(function () {
     Route::get('/public/thong-tin', [ThanhVienController::class, 'profile'])->name('site.profile'); // Trang thông tin người dùng
+    Route::post('/public/thong-tin/cap-nhat-thong-tin/{id}', [ThanhVienController::class, 'updateProfile'])->name('site.updateProfile');
+    Route::post('/public/thong-tin/cap-nhat-mat-khau/{id}', [ThanhVienController::class, 'updatePassword'])->name('site.updatePassword');
+
     Route::get('/public/dang-xuat', [ThanhVienController::class, 'logout'])->name('site.logout'); // Đăng xuất
     Route::get('/public/don-hang', [DonhangController::class, 'index'])->name('site.order');
     Route::get('/orders/cancel/{orderId}', [DonhangController::class, 'cancelOrder'])->name('site.cancel');
+    Route::put('/orders/update/{id}', [DonhangController::class, 'update'])->name('orders.update');
 
 
     //cart
@@ -65,10 +69,12 @@ Route::middleware(['login-customer'])->group(function () {
 
 
 // Route đăng nhập và đăng ký
-Route::get('/public/dang-nhap', [ThanhVienController::class, 'login'])->name('site.login');
-Route::post('/public/dang-nhap', [ThanhVienController::class, 'dologin'])->name('site.dologin');
-Route::get('/public/dang-ky', [ThanhVienController::class, 'register'])->name('site.register');
-Route::post('/public/dang-ky', [ThanhVienController::class, 'doregister'])->name('site.doregister');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/public/dang-nhap', [ThanhVienController::class, 'login'])->name('site.login');
+    Route::post('/public/dang-nhap', [ThanhVienController::class, 'dologin'])->name('site.dologin');
+    Route::get('/public/dang-ky', [ThanhVienController::class, 'register'])->name('site.register');
+    Route::post('/public/dang-ky', [ThanhVienController::class, 'doregister'])->name('site.doregister');
+});
 
 // Các route công cộng không yêu cầu đăng nhập
 Route::get('/public', [TrangchuController::class, 'index'])->name('site.home');

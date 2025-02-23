@@ -62,7 +62,15 @@
                         <input type="text" name="fullname" id="fullname" value="{{ old('fullname') }}"
                                class="mt-1 block w-full px-4 py-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
-
+                    <div class="mb-4">
+                        <label for="address" class="block text-sm font-medium text-gray-700">Địa chỉ</label>
+                        <input type="text" name="address" id="address" value="{{ old('address') }}" required
+                               class="mt-1 block w-full px-4 py-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        @if ($errors->has('address'))
+                            <div class="text-red-500 text-sm">{{ $errors->first('address') }}</div>
+                        @endif
+                    </div>
+                    
                     <div class="mb-4">
                         <label for="gender" class="block text-sm font-medium text-gray-700">Giới tính</label>
                         <select name="gender" id="gender" class="mt-1 block w-full px-4 py-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
@@ -87,6 +95,7 @@
                         <label for="status" class="block text-sm font-medium text-gray-700">Trạng thái</label>
                         <select name="status" id="status" class="mt-1 block w-full px-4 py-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             <option value="1">Hoạt động</option>
+                            <option value="2">Hoạt động(Customer)</option>
                             <option value="0">Không hoạt động</option>
                         </select>
                     </div>

@@ -1,7 +1,7 @@
 
 <x-layout-site>
     <x-slot:title>
-        Trang chủ
+        Về chúng tôi
     </x-slot:title>
     <div>
     

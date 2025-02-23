@@ -10,11 +10,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 @foreach ($products as $product)
                     <div class="border rounded-lg shadow-lg p-4">
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-48 object-cover rounded-md">
+                        <img src="{{ asset('images/product/' . $product->thumbnail) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover rounded-md">
                         <h2 class="text-lg font-bold mt-2">{{ $product->name }}</h2>
                         <p class="text-gray-600 mt-1">{{ Str::limit($product->description, 100) }}</p>
-                        <p class="text-blue-500 font-bold mt-2">{{ number_format($product->price, 0, ',', '.') }} VND</p>
-                        <a href="{{ route('frontend.products.product-detail', $product->id) }}" class="block text-center bg-blue-600 text-white py-2 mt-3 rounded-lg hover:bg-blue-700 transition duration-300">Xem chi tiết</a>
+                        <p class="text-lg font-bold text-gray-800 ">{{ number_format($product->price_buy * 1000, 0, ',', ',') }}₫ / kg</p>
+                        <a href="{{ route('frontend.products.product-detail',['slug' => $product->slug]) }}" class="block text-center bg-green-600 text-white py-2 mt-3 rounded-lg hover:bg-green-700 transition duration-300">Xem chi tiết</a>
                     </div>
                 @endforeach
             </div>
@@ -27,3 +27,4 @@
         @endif
     </div>
 </x-layout-site>
+    

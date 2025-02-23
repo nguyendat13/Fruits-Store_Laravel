@@ -65,28 +65,7 @@
                 
             </div>
             <!-- Danh sách sản phẩm -->
-{{-- <div id="product-list">
-    @if (request('view_mode') == 'list')
-        <!-- Chế độ hiển thị danh sách -->
-        
-        <div class="space-y-6">
-            @foreach ($products as $productitem)
-                <div class="flex items-center space-x-4 p-4 border rounded-lg hover:shadow-md">
-                    <x-product-card :productitem="$productitem" />
-                </div>
-            @endforeach
-        </div>
-    @else
-        <!-- Chế độ hiển thị lưới -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            @foreach ($products as $productitem)
-                <div class="border rounded-lg p-4 hover:shadow-md">
-                    <x-product-card :productitem="$productitem" />
-                </div>
-            @endforeach
-        </div>
-    @endif
-</div> --}}
+
  <!-- Danh sách sản phẩm -->
  <div id="product-list">
     @if ($products->isEmpty())

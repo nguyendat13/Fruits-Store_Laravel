@@ -1,4 +1,3 @@
-<!-- resources/views/components/product-sale.blade.php -->
 <div class="container mx-auto py-10 relative" style="width:80%;">
     <h2 class="text-3xl font-bold text-center text-gray-500 mb-8">Sản phẩm giảm giá</h2>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-center">

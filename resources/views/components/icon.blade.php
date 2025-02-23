@@ -11,37 +11,28 @@
 
     <div class="flex items-center space-x-4 relative right-[80px] text-xl text-gray-600">
         <div class="relative flex items-center">
-            <!-- Biểu tượng tìm kiếm -->
             <button class="fa-solid fa-magnifying-glass cursor-pointer hover:text-black" id="searchIcon"></button>
         
-            <!-- Ô tìm kiếm -->
             <form method="GET" action="{{ route('frontend.products.search') }}">
                 <input
                     type="text"
                     name="q"
                     id="searchInput"
-                    class="rounded-full w-[100px] text-[15px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 hidden transition-all"
+                    class="rounded-full w-[100px] text-[15px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                     placeholder="Tìm kiếm sản phẩm..."
                     value="{{ request('q') }}"
                 />
             </form>
-            {{-- <form action="{{ route('frontend.products.search') }}" method="GET" class="flex items-center">
-                <input
-                    type="text"
-                    name="q"
-                    placeholder="Tìm kiếm sản phẩm..."
-                    value="{{ request('q') }}"
-                    class="border rounded-l-md px-4 py-2 focus:outline-none"
-                >
-                <button
-                    type="submit"
-                    class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition duration-300"
-                >
-                    Tìm kiếm
-                </button>
-            </form>
-             --}}
         </div>
+        
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        @if ($errors->has('q'))
+            <div class="text-red-500 text-xs mb-4">
+                {{ $errors->first('q') }}
+            </div>
+        @endif
+        
+        
         <!-- Icon User và Dropdown Menu -->
         <div class="relative inline-block text-left " id="userIcon">
             <!-- Avatar/User Icon -->

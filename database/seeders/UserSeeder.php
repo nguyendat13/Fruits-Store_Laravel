@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
                 'roles' => $roles[array_rand($roles)],
                 'created_by' => 1,
                 'updated_by' => null, // Chưa được cập nhật
-                'status' => rand(0, 1), // Random trạng thái: 0 - ẩn, 1 - hiện
+                'status' => [0, 1, 2][array_rand([0, 1, 2])], // Random trạng thái từ mảng [0, 1, 2]
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => null, // Không bị xóa mềm

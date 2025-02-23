@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureGuest;
 use App\Http\Middleware\LoginAdmin;
 use App\Http\Middleware\LoginCustomer;
 use Illuminate\Foundation\Application;
@@ -20,6 +21,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->appendToGroup('login-customer', [
             LoginCustomer::class,
+        ]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->appendToGroup('guest', [
+            EnsureGuest::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

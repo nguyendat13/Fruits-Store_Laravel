@@ -52,6 +52,11 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         $qty = (isset($cart[$id])) ? ($cart[$id]['qty'] + 1) : 1;
 
+        // Kiểm tra xem số lượng có vượt quá kho không
+        if ($qty > $product->stock) {
+            return redirect()->back()->with('error', 'Số lượng sản phẩm trong kho không đủ.');
+        }
+
         $cart[$id] = [
             'name' => $product->name,
             'price' => $product->price_buy,
@@ -78,6 +83,12 @@ class CartController extends Controller
 
         foreach ($qty as $id => $n) {
             if (isset($cart[$id])) {
+                $product = Product::find($id); // Lấy thông tin sản phẩm
+
+                // Kiểm tra xem số lượng cập nhật có vượt quá số lượng trong kho không
+                if ($n > $product->stock) {
+                    return redirect()->back()->with('error', 'Số lượng sản phẩm trong kho không đủ.');
+                }
                 $cart[$id]['qty'] = max(1, $n); // Đảm bảo số lượng tối thiểu là 1
             }
         }

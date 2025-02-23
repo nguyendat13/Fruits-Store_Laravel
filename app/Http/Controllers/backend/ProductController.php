@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use App\Models\Product;  // Đảm bảo đã import model product
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Illuminate\Support\Str; // Đảm bảo bạn đã import Str
 
 class ProductController extends Controller
 {
@@ -86,6 +89,11 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        // Kiểm tra nếu sản phẩm có tên trùng với tên đã có trong hệ thống
+        $existingProduct = Product::where('name', $request->name)->first();
+        if ($existingProduct) {
+            return back()->with('error', 'Sản phẩm đã tồn tại');
+        }
         $product = new Product();
 
         if ($request->hasFile('thumbnail')) {
@@ -98,7 +106,7 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
         $product->name = $request->name;
-        $product->slug = $request->slug;
+        $product->slug = $request->slug ?: Str::slug($request->name); // Tạo slug từ tên sản phẩm nếu không có slug
         $product->content = $request->content;
         $product->description = $request->description;
         $product->price_buy = $request->price_buy;
@@ -156,22 +164,38 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, $id)
     {
-        $product = Product::where('id', $id)->first();
+        // Kiểm tra nếu sản phẩm có tên trùng với tên đã có trong hệ thống (ngoại trừ sản phẩm hiện tại)
+        $existingProduct = Product::where('name', $request->name)
+            ->where('id', '!=', $id) // Đảm bảo không kiểm tra chính sản phẩm này
+            ->first();
 
+        if ($existingProduct) {
+            return back()->with('error', 'Sản phẩm đã tồn tại');
+        }
+
+        // Lấy sản phẩm hiện tại
+        $product = Product::findOrFail($id); // Sử dụng findOrFail để đảm bảo sản phẩm tồn tại
+
+        // Kiểm tra và thay đổi hình ảnh nếu có ảnh mới
         if ($request->hasFile('thumbnail')) {
+            // Xóa ảnh cũ nếu có và tồn tại
             if ($product->thumbnail && File::exists(public_path("storage/images/product/" . $product->thumbnail))) {
                 File::delete(public_path("storage/images/product/" . $product->thumbnail));
             }
+
+            // Thêm ảnh mới
             $file = $request->file('thumbnail');
             $extension = $file->extension();
-            $filename = date('YmdHis') . "." . $extension;
+            $filename = now()->format('YmdHis') . "." . $extension; // Sử dụng Carbon để lấy thời gian hiện tại
             $file->move(public_path('storage/images/product'), $filename);
             $product->thumbnail = $filename;
         }
+
+        // Cập nhật các thông tin còn lại
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
         $product->name = $request->name;
-        $product->slug = $request->slug;
+        $product->slug = $request->slug ?: Str::slug($request->name); // Tạo slug tự động nếu không có slug
         $product->content = $request->content;
         $product->description = $request->description;
         $product->price_buy = $request->price_buy;
@@ -180,9 +204,13 @@ class ProductController extends Controller
         $product->detail = $request->detail ?? '';
         $product->status = $request->status ?? 0;
         $product->updated_by = Auth::id() ?? 1;
-        $product->updated_at = date('Y-m-d H:i:s');
+        $product->updated_at = now(); // Sử dụng Carbon để lưu thời gian chính xác hơn
+
+        // Lưu sản phẩm đã cập nhật
         $product->save();
-        return redirect()->route('product.index')->with('success', 'cap nhat thanh cong')->header('Debug-Redirect', 'true');
+
+        // Trả về thông báo thành công
+        return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công');
     }
 
 

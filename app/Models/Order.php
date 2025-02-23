@@ -20,7 +20,7 @@ class Order extends Model
     }
 
     // Liên kết với bảng orderdetails
-    public function orderdetail(): HasMany
+    public function orderDetails(): HasMany
     {
         return $this->hasMany(OrderDetail::class, 'order_id');
     }

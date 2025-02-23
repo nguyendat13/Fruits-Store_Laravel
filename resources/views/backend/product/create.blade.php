@@ -9,7 +9,18 @@
                 <h1 class="text-3xl font-bold">Thêm Sản Phẩm</h1>
                 <a href="{{ route('product.index') }}" class="text-blue-500 hover:underline">← Quay lại danh sách sản phẩm</a>
             </div>
-
+            @if(session('error'))
+            <div class="bg-red-500 text-white p-4 mb-4 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+        
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-4 mb-4 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+        
             <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-md shadow-md">
                 @csrf
 

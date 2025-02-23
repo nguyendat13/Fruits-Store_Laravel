@@ -97,16 +97,17 @@
                         <label for="roles" class="block text-sm font-medium text-gray-700">Vai trò</label>
                         <select name="roles" id="roles" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             <option value="admin" {{ $user->roles == 'admin' ? 'selected' : '' }}>Quản trị viên</option>
-                            <option value="user" {{ $user->roles == 'user' ? 'selected' : '' }}>Người dùng</option>
+                            <option value="user" {{ $user->roles == 'customer' ? 'selected' : '' }}>Người dùng</option>
                         </select>
                     </div>
 
                     <!-- Trạng thái -->
                     <div class="mb-4">
                         <label for="status" class="block text-sm font-medium text-gray-700">Trạng thái</label>
-                        <select name="status" id="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Hiển thị</option>
-                            <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Ẩn</option>
+                        <select name="status" id="status" class="mt-1 block w-full px-4 py-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="1">Hoạt động</option>
+                            <option value="2">Hoạt động(Customer)</option>
+                            <option value="0">Không hoạt động</option>
                         </select>
                     </div>
 

@@ -10,7 +10,18 @@
                     ← Quay lại danh sách
                 </a>
             </div>
-
+            @if(session('error'))
+            <div class="bg-red-500 text-white p-4 mb-4 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+        
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-4 mb-4 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+        
             <div class="bg-white shadow-md rounded-md p-6">
                 <form action="{{ route('product.update', ['product' => $product->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
